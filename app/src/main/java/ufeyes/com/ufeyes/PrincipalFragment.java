@@ -2,20 +2,25 @@ package ufeyes.com.ufeyes;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import ufeyes.com.ufeyes.domain.Ocorrencia;
 
 
 /**
@@ -98,7 +103,8 @@ public class PrincipalFragment extends Fragment {
                 TextView texto = (TextView) getActivity().findViewById(R.id.texto);
                 texto.setText("FRAGMENT PRINCIPAL");
                 pegarOrientacao();
-
+               // Ocorrencia
+               // showConfirmation(getContext());
 
 
 
@@ -110,6 +116,29 @@ public class PrincipalFragment extends Fragment {
         return view;
     }
 
+
+    public void showConfirmation(Context context){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
+        }
+        builder.setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete this entry?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
     public void botao(){
 
     }

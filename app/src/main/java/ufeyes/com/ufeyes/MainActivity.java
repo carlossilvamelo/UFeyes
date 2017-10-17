@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ufeyes.com.ufeyes.serviceLayer.SubscribeApp;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
@@ -59,6 +61,12 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //verificando é a primeira vez que o aplicativo é aberto
+        //para sobrescrever nas entidades do oreon
+        SubscribeApp subscribeApp = new SubscribeApp();
+        subscribeApp.verifySubscribe(getApplicationContext());
+
 
 
 
