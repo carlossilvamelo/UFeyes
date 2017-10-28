@@ -3,6 +3,7 @@ package ufeyes.com.ufeyes;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -107,6 +108,21 @@ public class PrincipalFragment extends Fragment {
                // showConfirmation(getContext());
 
 
+                LayoutInflater li = getActivity().getLayoutInflater();
+                View view = li.inflate(R.layout.confirmation_layout,null);
+
+                view.findViewById(R.id.btAssalto).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view){
+
+                    }
+
+                });
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirmação de denúncia");
+                builder.setView(view);
+                AlertDialog alert = builder.create();
+                alert.show();
 
                 return true;
             }
