@@ -3,6 +3,7 @@ package ufeyes.com.ufeyes;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -14,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ufeyes.com.ufeyes.domain.Ocorrencia;
+import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 
 
 /**
@@ -103,9 +107,22 @@ public class PrincipalFragment extends Fragment {
                 TextView texto = (TextView) getActivity().findViewById(R.id.texto);
                 texto.setText("FRAGMENT PRINCIPAL");
                 pegarOrientacao();
+
+                /// Teste de envio de notificação
+                NotificationCreator notecreate = new NotificationCreator(getContext());
+                Intent resultIntent = new Intent(getContext(), MainActivity.class);
+                notecreate.sendNotification(getContext(), resultIntent, "Testando", "Texto da notificação",
+                        001);
+
+                // Teste de atualização
+                if(getActivity() instanceof  MainActivity){
+                    MainActivity mainAct = (MainActivity) getActivity();
+                    MenuItem notifMenu = mainAct.getMenu().findItem(R.id.action_notification);
+                    notifMenu.setIcon(R.drawable.notification_received);
+                }
                // Ocorrencia
                // showConfirmation(getContext());
-
+/////
 
 
                 return true;
