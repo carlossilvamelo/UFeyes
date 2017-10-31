@@ -50,7 +50,7 @@ public class NotificationListener extends Thread{
     public void run(){
 
 
-
+        Log.i("NotificationListener","thread run");
         // Toast.makeText(context.getApplicationContext(), "asdasd", Toast.LENGTH_SHORT).show();
 
         // pi android 177.20.157.36
@@ -59,8 +59,8 @@ public class NotificationListener extends Thread{
         ServerSocket serverSocket = null;
         boolean listening = true;
         try {
-            serverSocket = new ServerSocket(8080);
-
+            serverSocket = new ServerSocket(1026);
+            Log.i("NotificationListener","thread loop");
             while (listening) {
                 Socket socket = serverSocket.accept();
 
@@ -92,8 +92,8 @@ public class NotificationListener extends Thread{
                     ja = jo.getJSONArray("contextResponses");
                     //System.out.println(ja.getJSONObject(0));//imprime id
                     // Log.i("json",ja.getJSONObject(0).toString());
-                    // observableRequest.setJson(ja.getJSONObject(0).toString());
-
+                    // observableRequest.setJson(ja.getJSONObject(0).toString())
+                    Log.i("RequestResponse",ja.getJSONObject(0).toString());
                     updateObserver(ja.getJSONObject(0).toString());
 
                 } catch (JSONException e) {
@@ -113,7 +113,7 @@ public class NotificationListener extends Thread{
             System.exit(-1);
         }
 
-
+        Log.i("NotificationListener","thread loop finish");
     }
 
 

@@ -30,15 +30,6 @@
             android:name=".serviceLayer.ListenerService"
             android:exported="false" />
 
-        <receiver
-            android:name=".serviceLayer.MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".serviceLayer.MyReceiver" />
-            </intent-filter>
-        </receiver>
-
         <activity android:name=".ConfirmationActivity"></activity>
     </application>
 

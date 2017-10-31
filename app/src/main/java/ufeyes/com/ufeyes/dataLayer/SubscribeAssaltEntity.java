@@ -12,10 +12,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by carlo on 17/10/2017.
+ * Created by carlo on 30/10/2017.
  */
 
-public class InsertRequest extends AsyncTask<String,Void,String> {
+public class SubscribeAssaltEntity extends AsyncTask<String,Void,String> {
 
     StringBuffer data = new StringBuffer();
     BufferedReader bufferReader = null;
@@ -28,7 +28,7 @@ public class InsertRequest extends AsyncTask<String,Void,String> {
         String json = params[0];
 
         try {
-            final URL url = new URL("http://"+host+"/v1/updateContext");
+            final URL url = new URL("http://"+host+"/v1/registry/subscribeContextAvailability");
             final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestProperty("Accept", "application/json");
@@ -41,7 +41,8 @@ public class InsertRequest extends AsyncTask<String,Void,String> {
             final OutputStream outputStream = connection.getOutputStream();
             final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-
+            // writer.write("{\"entities:\"[{\"type\":\"Room\",\"isPattern\":\"false\",\"id\":\"Room1\"}]}");
+            //writer.write("{\"entities\":[{\"type\":\"Room\",\"isPattern\":\"false\",\"id\":\"Room1\"}]}");
             writer.write(json);
             writer.flush();
             writer.close();
@@ -66,7 +67,7 @@ public class InsertRequest extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String s){
-        Log.i("InsertRequest",s);
+        Log.i("SubscribeAssaltEntity",s);
     }
 
 

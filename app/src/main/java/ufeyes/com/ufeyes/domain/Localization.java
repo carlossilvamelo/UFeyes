@@ -4,19 +4,19 @@ package ufeyes.com.ufeyes.domain;
  * Created by carlo on 14/10/2017.
  */
 
-public class Localizacao {
+public class Localization {
 
     private String idLocalizacao;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 
-    public Localizacao(String idLocalizacao, String latitude, String longitude) {
+    public Localization(String idLocalizacao, Double latitude, Double longitude) {
         this.idLocalizacao = idLocalizacao;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Localizacao() {
+    public Localization() {
     }
 
     public String getIdLocalizacao() {
@@ -27,19 +27,19 @@ public class Localizacao {
         this.idLocalizacao = idLocalizacao;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }

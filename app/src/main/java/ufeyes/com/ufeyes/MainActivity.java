@@ -1,6 +1,5 @@
 package ufeyes.com.ufeyes;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,13 +18,12 @@ import android.widget.Toast;
 import java.util.Observable;
 import java.util.Observer;
 
-import ufeyes.com.ufeyes.serviceLayer.ListenerService;
+import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.NotificationListener;
-import ufeyes.com.ufeyes.serviceLayer.NotificationService;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
+import ufeyes.com.ufeyes.serviceLayer.RetrieveIp;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeApp;
-
-import static com.google.android.gms.internal.zzagz.runOnUiThread;
+import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
 
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
@@ -38,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     private String json;
 
 
+
+
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
 
@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
+        //subscrevendo nas entidades de contexto
 
+        SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
+        subscribeRequestService.setSubscribeAllEntities();
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
@@ -62,13 +65,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-//listener de notificações
+        //listener de notificações
         NotificationListener notificationListener = new NotificationListener(observableRequest);
         notificationListener.start();
-
-
-     //   Toast.makeText(this, "asdasd", Toast.LENGTH_SHORT).show();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -127,23 +126,24 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.denuncias) {
             // Handle the camera action
             PrincipalFragment fragPrincipal = new PrincipalFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout,fragPrincipal).commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.minhas_denuncias) {
+
+        }else if (id == R.id.estatisticas) {
             FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout,fragmentEstatisticas).commit();
-        }else if (id == R.id.mapa_ocorrencias) {
+        }
+        else if (id == R.id.mapa_ocorrencias) {
 
             MapaOcorrenciasFragment fragMapa = new MapaOcorrenciasFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragMapa).commit();
 
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -184,6 +184,13 @@ public class MainActivity extends AppCompatActivity
             {
                 public void run()
                 {
+                    NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
+                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
+                            001);
+                    MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
+                    notifMenu.setIcon(R.drawable.notification_received);
+                    // Teste de atualização
 
                     Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT).show();
                 }

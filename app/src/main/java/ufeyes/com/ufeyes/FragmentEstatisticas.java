@@ -7,8 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
+import ufeyes.com.ufeyes.dataLayer.QueryRequest;
+import ufeyes.com.ufeyes.serviceLayer.InterfaceRequestListener;
+import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
+import ufeyes.com.ufeyes.utils.ParseContextElement;
+import ufeyes.com.ufeyes.utils.ParseQueryRequestJson;
+import ufeyes.com.ufeyes.utils.ContextElement;
 
 
 /**
@@ -19,15 +29,20 @@ import android.widget.TextView;
  * Use the {@link FragmentEstatisticas#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentEstatisticas extends Fragment {
+public class FragmentEstatisticas extends Fragment implements Observer, InterfaceRequestListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private Observable observableRequest;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static TextView porcentAssalt;
+    private static TextView porcentCarBreakIn;
+    private static TextView porcentVandalism;
+    private View fragmentView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,6 +71,20 @@ public class FragmentEstatisticas extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ObservableRequest observableRequest = new ObservableRequest();
+        construtorObservable(observableRequest);
+
+        QueryRequest queryRequestVandalism = new QueryRequest("Vandalism");
+        queryRequestVandalism.execute(ParseQueryRequestJson.jsonAllVandalism());
+
+        QueryRequest queryRequestCarBreakIn = new QueryRequest("CarBreakIn");
+        queryRequestCarBreakIn.execute(ParseQueryRequestJson.jsonAllCarBreakIn());
+
+        QueryRequest queryRequestAssalt = new QueryRequest("Assalt");
+        queryRequestAssalt.execute(ParseQueryRequestJson.jsonAllAssalt());
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -67,17 +96,10 @@ public class FragmentEstatisticas extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_estatisticas, container, false);
+        porcentAssalt = (TextView) view.findViewById(R.id.porcentAssalt);
+        porcentCarBreakIn = (TextView) view.findViewById(R.id.porcentCarBreakIn);
+        porcentVandalism = (TextView) view.findViewById(R.id.porcentVandalism);
 
-        Button botaoDenunciar = (Button) view.findViewById(R.id.button2);
-        botaoDenunciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView texto = (TextView) getActivity().findViewById(R.id.estatisticas);
-                texto.setText("FRAGMENT ESTATISTICAS");
-
-
-            }
-        });
 
 
         return view;
@@ -107,6 +129,33 @@ public class FragmentEstatisticas extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
+
+    @Override
+    public void resultListenerVandalism(String result) {
+
+
+        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
+        porcentVandalism.setText(list.size()+" ocorrências");
+
+    }
+
+    @Override
+    public void resultListenerAssalt(String result) {
+        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
+        porcentAssalt.setText(list.size()+" ocorrências");
+    }
+
+    @Override
+    public void resultListenerCarBreakIn(String result) {
+        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
+        porcentCarBreakIn.setText(list.size()+" ocorrências");
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -120,5 +169,9 @@ public class FragmentEstatisticas extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void construtorObservable(Observable obs) {
+        this.observableRequest = obs;
+        obs.addObserver(this);
     }
 }

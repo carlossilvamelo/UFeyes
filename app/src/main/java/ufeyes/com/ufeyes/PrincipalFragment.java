@@ -14,14 +14,27 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+
+import ufeyes.com.ufeyes.domain.Assalt;
+import ufeyes.com.ufeyes.domain.CarBreakIn;
+import ufeyes.com.ufeyes.domain.Localization;
 import ufeyes.com.ufeyes.domain.Ocorrencia;
+import ufeyes.com.ufeyes.domain.User;
+import ufeyes.com.ufeyes.domain.UserCondition;
+import ufeyes.com.ufeyes.domain.Vandalism;
+import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
+import ufeyes.com.ufeyes.serviceLayer.LocationService;
+import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 
 
 /**
@@ -84,8 +97,6 @@ public class PrincipalFragment extends Fragment {
         }
 
 
-
-
     }
 
     @Override
@@ -94,25 +105,112 @@ public class PrincipalFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-
         View view = inflater.inflate(R.layout.fragment_principal, container, false);
         ImageButton botaoDenunciar = (ImageButton) view.findViewById(R.id.button_denuncia);
 
         botaoDenunciar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                TextView texto = (TextView) getActivity().findViewById(R.id.texto);
-                texto.setText("FRAGMENT PRINCIPAL");
+
                 pegarOrientacao();
-               // Ocorrencia
-               // showConfirmation(getContext());
+                // Ocorrencia
+                // showConfirmation(getContext());
+/// Teste de envio de notificação
+
 
 
                 LayoutInflater li = getActivity().getLayoutInflater();
-                View view = li.inflate(R.layout.confirmation_layout,null);
+                View view = li.inflate(R.layout.confirmation_layout, null);
 
                 view.findViewById(R.id.btAssalto).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view){
+                    public void onClick(View view) {
+
+                        //setando usuário
+                        User newUser = new User();
+                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setIdUser("000000");
+
+                        //obtendo localização
+                        LocationService locationService = new LocationService(getActivity());
+                        locationService.pegarOrientacao();
+                        Localization newLocalization = new Localization();
+                        newLocalization.setLatitude(locationService.getLatitude());
+                        newLocalization.setLongitude(locationService.getLongitude());
+                        newLocalization.setIdLocalizacao("99999");
+
+
+                        //setando assalto
+                        Assalt newAssalt = new Assalt();
+                        newAssalt.setId(new Timestamp(System.currentTimeMillis()).toString());
+                        newAssalt.setUsuario(newUser);
+                        newAssalt.setLocalizacao(newLocalization);
+
+                        //enviando requisição
+                        InsertRequestService insertRequestService = new InsertRequestService();
+                        insertRequestService.insertAssaltEntity(newAssalt);
+
+
+                    }
+
+                });
+                view.findViewById(R.id.btArrombamento).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        //setando usuário
+                        User newUser = new User();
+                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setIdUser("000000");
+
+                        //obtendo localização
+                        LocationService locationService = new LocationService(getActivity());
+                        locationService.pegarOrientacao();
+                        Localization newLocalization = new Localization();
+                        newLocalization.setLatitude(locationService.getLatitude());
+                        newLocalization.setLongitude(locationService.getLongitude());
+                        newLocalization.setIdLocalizacao("99999");
+
+
+                        //setando arrombamento
+                        CarBreakIn newCarBreakIn = new CarBreakIn();
+                        newCarBreakIn.setId(new Timestamp(System.currentTimeMillis()).toString());
+                        newCarBreakIn.setUsuario(newUser);
+                        newCarBreakIn.setLocalizacao(newLocalization);
+
+                        //enviando requisição
+                        InsertRequestService insertRequestService = new InsertRequestService();
+                        insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+                    }
+
+                });
+                view.findViewById(R.id.btVandalismo).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        //setando usuário
+                        User newUser = new User();
+                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setIdUser("000000");
+
+                        //obtendo localização
+                        LocationService locationService = new LocationService(getActivity());
+                        locationService.pegarOrientacao();
+                        Localization newLocalization = new Localization();
+                        newLocalization.setLatitude(locationService.getLatitude());
+                        newLocalization.setLongitude(locationService.getLongitude());
+                        newLocalization.setIdLocalizacao("99999");
+
+
+                        //setando assalto
+                        Vandalism newVandalism = new Vandalism();
+                        newVandalism.setId(new Timestamp(System.currentTimeMillis()).toString());
+                        newVandalism.setUsuario(newUser);
+                        newVandalism.setLocalizacao(newLocalization);
+
+                        //enviando requisição
+                        InsertRequestService insertRequestService = new InsertRequestService();
+                        insertRequestService.insertVandalismEntity(newVandalism);
+                    }
+
+                });
+                view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
 
                     }
 
@@ -133,7 +231,7 @@ public class PrincipalFragment extends Fragment {
     }
 
 
-    public void showConfirmation(Context context){
+    public void showConfirmation(Context context) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
@@ -155,7 +253,8 @@ public class PrincipalFragment extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-    public void botao(){
+
+    public void botao() {
 
     }
 
@@ -200,8 +299,8 @@ public class PrincipalFragment extends Fragment {
 
     public void pegarOrientacao() {
 
-        tvLatitude = (TextView) getActivity().findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) getActivity().findViewById(R.id.tvLongitude);
+        // tvLatitude = (TextView) getActivity().findViewById(R.id.tvLatitude);
+        //  tvLongitude = (TextView) getActivity().findViewById(R.id.tvLongitude);
 
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -223,8 +322,8 @@ public class PrincipalFragment extends Fragment {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
 
-            tvLatitude.setText("Latitude: " + latitude);
-            tvLongitude.setText("Longitude: " + longitude);
+            // tvLatitude.setText("Latitude: " + latitude);
+            // tvLongitude.setText("Longitude: " + longitude);
         }
 
 
