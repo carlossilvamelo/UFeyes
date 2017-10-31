@@ -108,18 +108,7 @@ public class PrincipalFragment extends Fragment {
                 texto.setText("FRAGMENT PRINCIPAL");
                 pegarOrientacao();
 
-                /// Teste de envio de notificação
-                NotificationCreator notecreate = new NotificationCreator(getContext());
-                Intent resultIntent = new Intent(getContext(), MainActivity.class);
-                notecreate.sendNotification(getContext(), resultIntent, "Testando", "Texto da notificação",
-                        001);
 
-                // Teste de atualização
-                if(getActivity() instanceof  MainActivity){
-                    MainActivity mainAct = (MainActivity) getActivity();
-                    MenuItem notifMenu = mainAct.getMenu().findItem(R.id.action_notification);
-                    notifMenu.setIcon(R.drawable.notification_received);
-                }
                // Ocorrencia
                // showConfirmation(getContext());
 /////

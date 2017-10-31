@@ -20,6 +20,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ufeyes.com.ufeyes.serviceLayer.ListenerService;
+import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.NotificationService;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
@@ -188,6 +189,15 @@ public class MainActivity extends AppCompatActivity
             {
                 public void run()
                 {
+                    /// Teste de envio de notificação
+                    NotificationCreator notecreate = new NotificationCreator(getBaseContext());
+                    Intent resultIntent = new Intent(getBaseContext(), MainActivity.class);
+                    notecreate.sendNotification(getBaseContext(), resultIntent, "Testando", "Texto da notificação",
+                            001);
+
+                    // Teste de atualização
+                    MenuItem notifMenu = getMenu().findItem(R.id.action_notification);
+                    notifMenu.setIcon(R.drawable.notification_received);
 
                     Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT).show();
                 }
