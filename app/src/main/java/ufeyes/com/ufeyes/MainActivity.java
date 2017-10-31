@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private String json;
 
 
+    private Menu menu;
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
 
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -153,7 +155,9 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+    public Menu getMenu(){
+        return this.menu;
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
