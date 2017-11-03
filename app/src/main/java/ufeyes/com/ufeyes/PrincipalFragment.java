@@ -3,7 +3,6 @@ package ufeyes.com.ufeyes;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,14 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -28,13 +23,11 @@ import java.sql.Timestamp;
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Localization;
-import ufeyes.com.ufeyes.domain.Ocorrencia;
 import ufeyes.com.ufeyes.domain.User;
-import ufeyes.com.ufeyes.domain.UserCondition;
+import ufeyes.com.ufeyes.enumerations.EnumUserCondition;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
 import ufeyes.com.ufeyes.serviceLayer.LocationService;
-import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 
 
 /**
@@ -127,7 +120,7 @@ public class PrincipalFragment extends Fragment {
 
                         //setando usuário
                         User newUser = new User();
-                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
                         newUser.setIdUser("000000");
 
                         //obtendo localização
@@ -157,7 +150,7 @@ public class PrincipalFragment extends Fragment {
                     public void onClick(View view) {
                         //setando usuário
                         User newUser = new User();
-                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
                         newUser.setIdUser("000000");
 
                         //obtendo localização
@@ -185,7 +178,7 @@ public class PrincipalFragment extends Fragment {
                     public void onClick(View view) {
                         //setando usuário
                         User newUser = new User();
-                        newUser.setCondition(UserCondition.WITNESS.ordinal());
+                        newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
                         newUser.setIdUser("000000");
 
                         //obtendo localização

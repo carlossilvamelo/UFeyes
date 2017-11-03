@@ -1,4 +1,4 @@
-package ufeyes.com.ufeyes.serviceLayer;
+package ufeyes.com.ufeyes.serviceLayer.Listeners;
 
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -27,6 +27,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 import ufeyes.com.ufeyes.MainActivity;
+import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 
 import static com.google.android.gms.internal.zzagz.runOnUiThread;
 

@@ -26,10 +26,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".serviceLayer.ListenerService"
-            android:exported="false" />
-
         <activity android:name=".ConfirmationActivity"></activity>
     </application>
 

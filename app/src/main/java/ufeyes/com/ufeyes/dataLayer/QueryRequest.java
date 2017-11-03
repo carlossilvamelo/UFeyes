@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ufeyes.com.ufeyes.FragmentEstatisticas;
-import ufeyes.com.ufeyes.serviceLayer.InterfaceRequestListener;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 
 /**
  * Created by carlo on 17/10/2017.
@@ -30,7 +30,7 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
         this.type = type;
     }
 
-    private InterfaceRequestListener interfaceListener = null;
+    private IRequestOcorrenceListener interfaceListener = null;
 
 
 
