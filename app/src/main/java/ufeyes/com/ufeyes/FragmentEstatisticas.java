@@ -14,7 +14,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ufeyes.com.ufeyes.dataLayer.QueryRequest;
-import ufeyes.com.ufeyes.serviceLayer.InterfaceRequestListener;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 import ufeyes.com.ufeyes.utils.ParseContextElement;
 import ufeyes.com.ufeyes.utils.ParseQueryRequestJson;
@@ -29,7 +29,7 @@ import ufeyes.com.ufeyes.utils.ContextElement;
  * Use the {@link FragmentEstatisticas#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentEstatisticas extends Fragment implements Observer, InterfaceRequestListener {
+public class FragmentEstatisticas extends Fragment implements Observer, IRequestOcorrenceListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
