@@ -14,12 +14,9 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import ufeyes.com.ufeyes.dataLayer.QueryRequest;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
-import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
 import ufeyes.com.ufeyes.utils.ParseContextElement;
-import ufeyes.com.ufeyes.utils.ParseQueryRequestJson;
 import ufeyes.com.ufeyes.utils.ContextElement;
 
 
@@ -44,6 +41,9 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
     private static TextView porcentAssalt;
     private static TextView porcentCarBreakIn;
     private static TextView porcentVandalism;
+    private static TextView tvCarBreakInPeriod;
+    private static TextView tvVandalismPeriod;
+    private static TextView tvAssaltPeriod;
     private View fragmentView;
 
     private OnFragmentInteractionListener mListener;
@@ -134,37 +134,54 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     }
     private static float totalOccorrences, numVandalism, numCarBreakIn, numAssalt;
+    private static ArrayList<ContextElement> listVandalism, listAssalt, listCarBreakIn;
+    private static int barrier = 0;
 
     @Override
     public void resultListenerVandalism(String result) {
-
-
-        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
-        numVandalism = list.size();
-        porcentVandalism.setText(numVandalism+" ocorrências");
+        ArrayList<ContextElement> listVandalism = ParseContextElement.getContextResponse(result);
+        numVandalism = listVandalism.size();
+        barrier++;
 
     }
 
     @Override
     public void resultListenerAssalt(String result) {
-        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
-        numAssalt = list.size();
+        ArrayList<ContextElement> listAssalt = ParseContextElement.getContextResponse(result);
+        numAssalt = listAssalt.size();
+        barrier++;
+
+
     }
 
     @Override
     public void resultListenerCarBreakIn(String result) {
-        ArrayList<ContextElement> list = ParseContextElement.getContextResponse(result);
-        numCarBreakIn = list.size();
-        totalOccorrences =numAssalt+numCarBreakIn+numVandalism;
+        ArrayList<ContextElement> listCarBreakIn = ParseContextElement.getContextResponse(result);
+        numCarBreakIn = listCarBreakIn.size();
+        barrier++;
+
         attPercentOcorrences();
     }
 
+    private void attPeriodsOccorrences(){
+       if(listVandalism != null){
+           for (ContextElement ce : listVandalism) {
+
+           }
+       }
+    }
     private void attPercentOcorrences(){
         DecimalFormat df = new DecimalFormat("0.00");
+        while(barrier != 3){
 
+        }
+        barrier =0;
+        totalOccorrences =numAssalt+numCarBreakIn+numVandalism;
         porcentVandalism.setText(df.format((numVandalism/totalOccorrences)*100)+"%");
         porcentCarBreakIn.setText(df.format((numCarBreakIn/totalOccorrences)*100)+"%");
         porcentAssalt.setText(df.format((numAssalt/totalOccorrences)*100)+"%");
+
+        attPeriodsOccorrences();
     }
 
 

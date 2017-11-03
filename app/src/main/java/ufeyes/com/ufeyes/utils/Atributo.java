@@ -8,6 +8,7 @@ public class Atributo {
     private String name;
     private String type;
     private String value;
+
     public String getId() {
         return name;
     }
