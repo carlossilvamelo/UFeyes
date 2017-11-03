@@ -28,6 +28,7 @@ import ufeyes.com.ufeyes.enumerations.EnumUserCondition;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
 import ufeyes.com.ufeyes.serviceLayer.LocationService;
+import ufeyes.com.ufeyes.utils.TimestampManager;
 
 
 /**
@@ -92,6 +93,8 @@ public class PrincipalFragment extends Fragment {
 
     }
 
+    private static AlertDialog alert;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,11 +109,6 @@ public class PrincipalFragment extends Fragment {
             public boolean onLongClick(View v) {
 
                 pegarOrientacao();
-                // Ocorrencia
-                // showConfirmation(getContext());
-/// Teste de envio de notificação
-
-
 
                 LayoutInflater li = getActivity().getLayoutInflater();
                 View view = li.inflate(R.layout.confirmation_layout, null);
@@ -121,27 +119,29 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
                         locationService.pegarOrientacao();
+
+                        //criando localização
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando assalto
                         Assalt newAssalt = new Assalt();
-                        newAssalt.setId(new Timestamp(System.currentTimeMillis()).toString());
+                        newAssalt.setId(TimestampManager.getTimeStamp());
                         newAssalt.setUsuario(newUser);
                         newAssalt.setLocalizacao(newLocalization);
 
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertAssaltEntity(newAssalt);
-
+                        alert.dismiss();
 
                     }
 
@@ -151,7 +151,7 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
@@ -159,7 +159,7 @@ public class PrincipalFragment extends Fragment {
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando arrombamento
@@ -171,6 +171,7 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+                        alert.dismiss();
                     }
 
                 });
@@ -179,7 +180,7 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
@@ -187,7 +188,7 @@ public class PrincipalFragment extends Fragment {
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando assalto
@@ -199,12 +200,13 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertVandalismEntity(newVandalism);
+                        alert.dismiss();
                     }
 
                 });
                 view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-
+                        alert.dismiss();
                     }
 
                 });
@@ -212,7 +214,7 @@ public class PrincipalFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Confirmação de denúncia");
                 builder.setView(view);
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
 
                 return true;

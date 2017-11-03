@@ -8,7 +8,15 @@ import java.util.List;
 
 public class Vandalism extends Ocorrencia{
 
+    private List<Thug> thugList;
 
+    public List<Thug> getThugList() {
+        return thugList;
+    }
+
+    public void setThugList(List<Thug> thugList) {
+        this.thugList = thugList;
+    }
 
     public Vandalism(User usuario, Localization localizacao) {
         super(usuario, localizacao);

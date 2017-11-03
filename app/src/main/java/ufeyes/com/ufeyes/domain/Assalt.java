@@ -12,6 +12,13 @@ public class Assalt extends Ocorrencia {
 
     private List<Thug> thugList;
 
+    public List<Thug> getThugList() {
+        return thugList;
+    }
+
+    public void setThugList(List<Thug> thugList) {
+        this.thugList = thugList;
+    }
 
     public Assalt(User usuario, Localization localizacao) {
         super(usuario, localizacao);
