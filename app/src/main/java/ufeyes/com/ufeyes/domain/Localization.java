@@ -9,6 +9,15 @@ public class Localization {
     private String idLocalizacao;
     private Double latitude;
     private Double longitude;
+    private String timeStamp;
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public Localization(String idLocalizacao, Double latitude, Double longitude) {
         this.idLocalizacao = idLocalizacao;

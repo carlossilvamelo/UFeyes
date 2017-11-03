@@ -1,4 +1,4 @@
-package ufeyes.com.ufeyes.serviceLayer;
+package ufeyes.com.ufeyes.utils;
 
 import android.util.Log;
 

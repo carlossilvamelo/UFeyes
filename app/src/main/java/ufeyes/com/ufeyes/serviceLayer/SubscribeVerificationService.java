@@ -8,7 +8,7 @@ import android.util.Log;
  * Created by carlo on 17/10/2017.
  */
 
-public class SubscribeApp {
+public class SubscribeVerificationService {
 
 
     public static void verifySubscribe(Context context){

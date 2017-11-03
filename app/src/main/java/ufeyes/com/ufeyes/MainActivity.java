@@ -19,17 +19,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
-import ufeyes.com.ufeyes.serviceLayer.NotificationListener;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
-import ufeyes.com.ufeyes.serviceLayer.RetrieveIp;
-import ufeyes.com.ufeyes.serviceLayer.SubscribeApp;
+import ufeyes.com.ufeyes.utils.RetrieveIp;
+import ufeyes.com.ufeyes.serviceLayer.SubscribeVerificationService;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
 
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        ,MapaOcorrenciasFragment.OnFragmentInteractionListener{
+        ,MapaOcorrenciasFragment.OnFragmentInteractionListener {
 
 
     private Observable observableRequest;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
         //verificando é a primeira vez que o aplicativo é aberto
         //para sobrescrever nas entidades do oreon
-        SubscribeApp subscribeApp = new SubscribeApp();
+        SubscribeVerificationService subscribeApp = new SubscribeVerificationService();
         subscribeApp.verifySubscribe(getApplicationContext());
 
     }
