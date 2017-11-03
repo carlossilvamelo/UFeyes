@@ -16,8 +16,10 @@ import java.util.Observer;
 
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
+import ufeyes.com.ufeyes.utils.DateTime;
 import ufeyes.com.ufeyes.utils.ParseContextElement;
 import ufeyes.com.ufeyes.utils.ContextElement;
+import ufeyes.com.ufeyes.utils.TimestampManager;
 
 
 /**
@@ -164,11 +166,38 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
     }
 
     private void attPeriodsOccorrences(){
+        DateTime dateTime;
+        int noite =0;
+        int manha = 0;
+        int tarde = 0;
+        String maior="";
        if(listVandalism != null){
            for (ContextElement ce : listVandalism) {
-
+               dateTime = TimestampManager.stringToTimestamp(ce.getId());
+               if((dateTime.getHour()>5)&&(dateTime.getHour()<=12)){
+                   manha++;
+               }
+               if((dateTime.getHour()>12)&&(dateTime.getHour()<=18)){
+                    tarde++;
+               }
+               if((dateTime.getHour()>18)&&(dateTime.getHour()<=0)){
+                    noite++;
+               }
            }
+
+           //ordenando
+           if(manha>=tarde && manha>=noite)
+               maior = "manhã";
+
+           if(tarde >=manha && tarde>=noite)
+               maior = "tarde";
+
+           if(noite >=tarde && noite>=manha)
+               maior = "noite";
+
+           tvVandalismPeriod.setText("Período de maior risco: ");
        }
+
     }
     private void attPercentOcorrences(){
         DecimalFormat df = new DecimalFormat("0.00");
@@ -180,7 +209,7 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         porcentVandalism.setText(df.format((numVandalism/totalOccorrences)*100)+"%");
         porcentCarBreakIn.setText(df.format((numCarBreakIn/totalOccorrences)*100)+"%");
         porcentAssalt.setText(df.format((numAssalt/totalOccorrences)*100)+"%");
-
+        tvVandalismPeriod.setText("Período de maior risco: ");
         attPeriodsOccorrences();
     }
 
