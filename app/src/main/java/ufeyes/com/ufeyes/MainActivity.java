@@ -28,8 +28,7 @@ import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
-        , PrincipalFragment.OnFragmentInteractionListener
-        ,MapaOcorrenciasFragment.OnFragmentInteractionListener {
+        , PrincipalFragment.OnFragmentInteractionListener{
 
 
     private Observable observableRequest;
@@ -140,10 +139,8 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.mapa_ocorrencias) {
 
-            MapaOcorrenciasFragment fragMapa = new MapaOcorrenciasFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, fragMapa).commit();
-
+            Intent intent = new Intent(this, MapOccurrencesActivity.class);
+            startActivity(intent);
 
         }
 
