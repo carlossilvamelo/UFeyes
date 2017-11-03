@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        ,MapaOcorrenciasFragment.OnFragmentInteractionListener {
+        , MapaOcorrenciasFragment.OnFragmentInteractionListener {
 
 
     private Observable observableRequest;

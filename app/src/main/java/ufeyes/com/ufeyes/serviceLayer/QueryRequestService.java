@@ -8,17 +8,19 @@ import ufeyes.com.ufeyes.utils.ParseQueryRequestJson;
  */
 
 public class QueryRequestService {
-    QueryRequest queryRequest = new QueryRequest("");
+    QueryRequest queryRequestVandalism = new QueryRequest("Vandalism");
+    QueryRequest queryRequestCarBreakIn = new QueryRequest("CarBreakIn");
+    QueryRequest queryRequestAssalt = new QueryRequest("Assalt");
 
 
     public void getAllAssalt(){
-        queryRequest.execute(ParseQueryRequestJson.jsonAllAssalt());
+        queryRequestAssalt.execute(ParseQueryRequestJson.jsonAllAssalt());
     }
     public void getAllCarBreakIn(){
-        queryRequest.execute(ParseQueryRequestJson.jsonAllCarBreakIn());
+        queryRequestCarBreakIn.execute(ParseQueryRequestJson.jsonAllCarBreakIn());
          }
     public void getAllVandalism(){
-        queryRequest.execute(ParseQueryRequestJson.jsonAllVandalism());
+        queryRequestVandalism.execute(ParseQueryRequestJson.jsonAllVandalism());
     }
 
     public void getAssaltByUserId(String userId){}
