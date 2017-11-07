@@ -1,8 +1,5 @@
 package ufeyes.com.ufeyes.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ufeyes.com.ufeyes.domain.Assalt;
 
 /**

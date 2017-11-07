@@ -4,13 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,9 +19,9 @@ import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
-import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
-import ufeyes.com.ufeyes.utils.ParseContextElement;
-import ufeyes.com.ufeyes.utils.ContextElement;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceAssalt;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceCarBreakIn;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceVandalism;
 
 
 /**
@@ -79,10 +79,13 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         super.onCreate(savedInstanceState);
 
 
-        QueryRequestService queryRequestService = new QueryRequestService();
-        queryRequestService.getAllVandalism();
-        queryRequestService.getAllAssalt();
-        queryRequestService.getAllCarBreakIn();
+        QueryRequestServiceAssalt queryRequestServiceAssalt = new QueryRequestServiceAssalt();
+        QueryRequestServiceVandalism queryRequestServiceVandalism = new QueryRequestServiceVandalism();
+        QueryRequestServiceCarBreakIn queryRequestServiceCarBreakIn = new QueryRequestServiceCarBreakIn();
+        queryRequestServiceVandalism.getAllVandalism();
+        queryRequestServiceAssalt.getAllAssalt();
+        queryRequestServiceCarBreakIn.getAllCarBreakIn();
+
 
 
 
@@ -159,12 +162,19 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
     @Override
     public void resultListenerVandalism(List<Vandalism> vandalism) {
         numVandalism = vandalism.size();
+        Vandalism v = vandalism.get(0);
+        Log.i("objVandalism",v.getUsuario().getIdUser()+" ");
+       Log.i("objVandalism",v.getLocalizacao().getLatitude()+" ");
+        Log.i("objAssalt",v.getThugList().size()+" ");
     barrier++;
     }
 
     @Override
     public void resultListenerAssalt(List<Assalt> assalt) {
         numAssalt = assalt.size();
+        Log.i("objAssalt",assalt.get(0).getUsuario().getIdUser()+" ");
+        Log.i("objAssalt",assalt.get(0).getLocalizacao().getLatitude()+" ");
+        Log.i("objAssalt",assalt.get(0).getThugList().size()+" ");
     barrier++;
     }
 
@@ -172,7 +182,11 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
     public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
         numCarBreakIn = carBreakIn.size();
         barrier++;
+        attPercentOcorrences();
+        Log.i("objCarBreakIn",carBreakIn.get(0).getUsuario().getIdUser()+" ");
+        Log.i("objCarBreakIn",carBreakIn.get(0).getLocalizacao().getLatitude()+" ");
     }
+
 
 
     /**
