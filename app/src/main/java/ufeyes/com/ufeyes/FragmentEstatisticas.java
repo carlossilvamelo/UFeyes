@@ -11,9 +11,13 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.domain.Assalt;
+import ufeyes.com.ufeyes.domain.CarBreakIn;
+import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
 import ufeyes.com.ufeyes.utils.ParseContextElement;
@@ -134,42 +138,10 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     }
     private static float totalOccorrences, numVandalism, numCarBreakIn, numAssalt;
-    private static ArrayList<ContextElement> listVandalism, listAssalt, listCarBreakIn;
     private static int barrier = 0;
 
-    @Override
-    public void resultListenerVandalism(String result) {
-        ArrayList<ContextElement> listVandalism = ParseContextElement.getContextResponse(result);
-        numVandalism = listVandalism.size();
-        barrier++;
-
-    }
-
-    @Override
-    public void resultListenerAssalt(String result) {
-        ArrayList<ContextElement> listAssalt = ParseContextElement.getContextResponse(result);
-        numAssalt = listAssalt.size();
-        barrier++;
 
 
-    }
-
-    @Override
-    public void resultListenerCarBreakIn(String result) {
-        ArrayList<ContextElement> listCarBreakIn = ParseContextElement.getContextResponse(result);
-        numCarBreakIn = listCarBreakIn.size();
-        barrier++;
-
-        attPercentOcorrences();
-    }
-
-    private void attPeriodsOccorrences(){
-       if(listVandalism != null){
-           for (ContextElement ce : listVandalism) {
-
-           }
-       }
-    }
     private void attPercentOcorrences(){
         DecimalFormat df = new DecimalFormat("0.00");
         while(barrier != 3){
@@ -181,7 +153,25 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         porcentCarBreakIn.setText(df.format((numCarBreakIn/totalOccorrences)*100)+"%");
         porcentAssalt.setText(df.format((numAssalt/totalOccorrences)*100)+"%");
 
-        attPeriodsOccorrences();
+
+    }
+
+    @Override
+    public void resultListenerVandalism(List<Vandalism> vandalism) {
+        numVandalism = vandalism.size();
+    barrier++;
+    }
+
+    @Override
+    public void resultListenerAssalt(List<Assalt> assalt) {
+        numAssalt = assalt.size();
+    barrier++;
+    }
+
+    @Override
+    public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
+        numCarBreakIn = carBreakIn.size();
+        barrier++;
     }
 
 

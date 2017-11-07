@@ -11,8 +11,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import ufeyes.com.ufeyes.FragmentEstatisticas;
-import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.IQueryRequestListener;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
 
 /**
  * Created by carlo on 17/10/2017.
@@ -30,7 +30,7 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
         this.type = type;
     }
 
-    private IRequestOcorrenceListener interfaceListener = null;
+    private IQueryRequestListener iQueryRequestListener = null;
 
 
 
@@ -80,18 +80,30 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String s){
-        Log.i("post",s);
+        Log.i("DataLayer","QueryRequest response");
         if(type.equals("Vandalism")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerVandalism(s);
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerVandalism(s);
         }
         if(type.equals("CarBreakIn")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerCarBreakIn(s);
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerCarBreakIn(s);
         }
         if(type.equals("Assalt")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerAssalt(s);
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerAssalt(s);
+        }
+        if(type.equals("User")){
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerUser(s);
+        }
+        if(type.equals("Localization")){
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerLocalization(s);
+        }
+        if(type.equals("Thug")){
+            iQueryRequestListener = new QueryRequestService();
+            iQueryRequestListener.resultListenerLocaThug(s);
         }
 
 
