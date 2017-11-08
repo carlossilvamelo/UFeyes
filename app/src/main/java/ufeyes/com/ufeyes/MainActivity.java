@@ -29,13 +29,12 @@ public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        ,MapaOcorrenciasFragment.OnFragmentInteractionListener {
+        , MapaOcorrenciasFragment.OnFragmentInteractionListener
+        , MinhasDenunciasFragment.OnFragmentInteractionListener {
 
 
     private Observable observableRequest;
     private String json;
-
-
 
 
     private NavigationView navigationView = null;
@@ -54,11 +53,10 @@ public class MainActivity extends AppCompatActivity
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.corrent_layout,fragmentInicial).commit();
+                .replace(R.id.corrent_layout, fragmentInicial).commit();
 
         ObservableRequest observableRequest = new ObservableRequest();
         construtorObservable(observableRequest);
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -135,15 +133,16 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             PrincipalFragment fragPrincipal = new PrincipalFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragPrincipal).commit();
+                    .replace(R.id.corrent_layout, fragPrincipal).commit();
         } else if (id == R.id.minhas_denuncias) {
-
-        }else if (id == R.id.estatisticas) {
+            MinhasDenunciasFragment minhasDenunciasFragment = new MinhasDenunciasFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, minhasDenunciasFragment).commit();
+        } else if (id == R.id.estatisticas) {
             FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragmentEstatisticas).commit();
-        }
-        else if (id == R.id.mapa_ocorrencias) {
+                    .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
+        } else if (id == R.id.mapa_ocorrencias) {
 
             MapaOcorrenciasFragment fragMapa = new MapaOcorrenciasFragment();
             getSupportFragmentManager().beginTransaction()
@@ -158,13 +157,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
 
     public void construtorObservable(Observable obs) {
@@ -175,20 +171,18 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Metodo listener das requisições do oreo (notificações)
-     * */
+     */
     @Override
     public void update(Observable observable, Object arg) {
         if (observable instanceof ObservableRequest) {
             ObservableRequest observableRequest = (ObservableRequest) observable;
             json = observableRequest.getEdicao();
-          //  toolbar.setTitle(json);
-           // getSupportActionBar().setTitle("asd");
-            Log.i("update","metodo update chamado na main");
-          //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
-            runOnUiThread(new Runnable()
-            {
-                public void run()
-                {
+            //  toolbar.setTitle(json);
+            // getSupportActionBar().setTitle("asd");
+            Log.i("update", "metodo update chamado na main");
+            //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
+            runOnUiThread(new Runnable() {
+                public void run() {
                     NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
                     Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
                     notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
@@ -200,11 +194,9 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT).show();
                 }
             });
-           //System.out.println("chegou");
+            //System.out.println("chegou");
         }
     }
-
-
 
 
 }
