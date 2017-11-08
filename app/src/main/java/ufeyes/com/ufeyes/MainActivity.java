@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        , MapaOcorrenciasFragment.OnFragmentInteractionListener
         , MinhasDenunciasFragment.OnFragmentInteractionListener {
 
 
@@ -144,10 +143,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
         } else if (id == R.id.mapa_ocorrencias) {
 
-            MapaOcorrenciasFragment fragMapa = new MapaOcorrenciasFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, fragMapa).commit();
-
+            Intent intent = new Intent(this, MapOccurrencesActivity.class);
+            startActivity(intent);
 
         }
 
@@ -177,12 +174,14 @@ public class MainActivity extends AppCompatActivity
         if (observable instanceof ObservableRequest) {
             ObservableRequest observableRequest = (ObservableRequest) observable;
             json = observableRequest.getEdicao();
-            //  toolbar.setTitle(json);
-            // getSupportActionBar().setTitle("asd");
-            Log.i("update", "metodo update chamado na main");
-            //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
-            runOnUiThread(new Runnable() {
-                public void run() {
+          //  toolbar.setTitle(json);
+           // getSupportActionBar().setTitle("asd");
+            Log.i("update","metodo update chamado na main");
+          //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
+            runOnUiThread(new Runnable()
+            {
+                public void run()
+                {
                     NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
                     Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
                     notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
@@ -197,6 +196,4 @@ public class MainActivity extends AppCompatActivity
             //System.out.println("chegou");
         }
     }
-
-
 }
