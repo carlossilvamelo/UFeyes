@@ -114,6 +114,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_notification){
+            FragmentNotification fragNotif = new FragmentNotification();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, fragNotif).commit();
+        }
 
         return super.onOptionsItemSelected(item);
     }
