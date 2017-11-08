@@ -1,10 +1,12 @@
 package ufeyes.com.ufeyes.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by carlo on 14/10/2017.
  */
 
-public class Thug {
+public class Thug implements Serializable {
 
 
 
