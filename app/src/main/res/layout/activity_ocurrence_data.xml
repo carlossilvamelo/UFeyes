@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ufeyes.com.ufeyes.OcurrenceDataActivity">
+
+    <ImageView
+        android:id="@+id/ocurrImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/cast_abc_scrubber_primary_mtrl_alpha" />
+
+    <TextView
+        android:id="@+id/ocurrType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ocurrImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:textSize="25dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/ocurrDescript"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ocurrType"
+        android:layout_marginTop="37dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/mapRedirectButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="110dp"
+        android:text="Ver no mapa"></Button>
+
+</RelativeLayout>

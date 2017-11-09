@@ -127,9 +127,9 @@ public class FragmentNotification extends Fragment {
         lvMinhasNotif.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), EditarOcorrenciaActivity.class);
+                Intent intent = new Intent(getContext(), OcurrenceDataActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("occorrence",ocorrenciaList.get(position));
+                bundle.putSerializable("occurrence",ocorrenciaList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

@@ -68,6 +68,11 @@ public class MainActivity extends AppCompatActivity
         ObservableRequest observableRequest = new ObservableRequest();
         construtorObservable(observableRequest);
 
+        UserDAO Udao = new UserDAO(getApplicationContext());
+        boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+        if(sucessUser){
+            System.out.println("Success user");
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

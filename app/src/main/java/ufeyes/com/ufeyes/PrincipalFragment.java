@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
+import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Localization;
@@ -156,11 +157,6 @@ public class PrincipalFragment extends Fragment {
                         Log.d("Data da localizacao ", time);
                         Log.d("Usuario logado ", usuarioLogado.getNome());
 
-                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                        //if(sucessUser){
-                        // System.out.println("Success user");
-                        //}
 
                         OccurrenceDAO Odao = new OccurrenceDAO(getContext());
                         boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Assalto", usuarioLogado.getId(), time);
