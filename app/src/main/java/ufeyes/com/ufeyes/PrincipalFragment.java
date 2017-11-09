@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Localization;
 import ufeyes.com.ufeyes.domain.User;
+import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.enumerations.EnumUserCondition;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
 import ufeyes.com.ufeyes.serviceLayer.LocationService;
+import ufeyes.com.ufeyes.utils.UsuarioLogado;
+import ufeyes.com.ufeyes.utils.TimestampManager;
 
 
 /**
@@ -92,6 +98,8 @@ public class PrincipalFragment extends Fragment {
 
     }
 
+    private static AlertDialog alert;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,11 +114,6 @@ public class PrincipalFragment extends Fragment {
             public boolean onLongClick(View v) {
 
                 pegarOrientacao();
-                // Ocorrencia
-                // showConfirmation(getContext());
-/// Teste de envio de notificação
-
-
 
                 LayoutInflater li = getActivity().getLayoutInflater();
                 View view = li.inflate(R.layout.confirmation_layout, null);
@@ -121,20 +124,22 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
                         locationService.pegarOrientacao();
+
+                        //criando localização
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando assalto
                         Assalt newAssalt = new Assalt();
-                        newAssalt.setId(new Timestamp(System.currentTimeMillis()).toString());
+                        newAssalt.setId(TimestampManager.getTimeStamp());
                         newAssalt.setUsuario(newUser);
                         newAssalt.setLocalizacao(newLocalization);
 
@@ -142,6 +147,28 @@ public class PrincipalFragment extends Fragment {
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertAssaltEntity(newAssalt);
 
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Assalto", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence assalt");
+                        }
+
+                        alert.dismiss();
 
                     }
 
@@ -151,7 +178,7 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
@@ -159,7 +186,7 @@ public class PrincipalFragment extends Fragment {
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando arrombamento
@@ -171,6 +198,30 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+                        alert.dismiss();
+
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Arrombamento", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence arrombamento");
+                        }
+
+
                     }
 
                 });
@@ -179,7 +230,7 @@ public class PrincipalFragment extends Fragment {
                         //setando usuário
                         User newUser = new User();
                         newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                        newUser.setIdUser("000000");
+                        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
 
                         //obtendo localização
                         LocationService locationService = new LocationService(getActivity());
@@ -187,7 +238,7 @@ public class PrincipalFragment extends Fragment {
                         Localization newLocalization = new Localization();
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
-                        newLocalization.setIdLocalizacao("99999");
+                        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
 
                         //setando assalto
@@ -199,12 +250,35 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertVandalismEntity(newVandalism);
+                        alert.dismiss();
+
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Vandalismo", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence vandalism");
+                        }
+
                     }
 
                 });
                 view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-
+                        alert.dismiss();
                     }
 
                 });
@@ -212,7 +286,7 @@ public class PrincipalFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Confirmação de denúncia");
                 builder.setView(view);
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
 
                 return true;

@@ -15,87 +15,137 @@
         android:orientation="vertical">
 
 
-
-
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f7f5c7"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="horizontal">
 
-                android:src="@drawable/assalto" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/assalto" />
+
+                <TextView
+                    android:id="@+id/porcentAssalt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="40dp" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/porcentAssalt"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvAssaltPeriod"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text=""
                 android:textAlignment="center"
-                android:textSize="40dp"
-                android:text="" />
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fcd5c5"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="horizontal">
 
-                android:src="@drawable/arrombamento_carro" />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/arrombamento_carro" />
+
+                <TextView
+                    android:id="@+id/porcentCarBreakIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="40dp" />
+
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/porcentCarBreakIn"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvCarBreakInPeriod"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text=""
                 android:textAlignment="center"
-                android:textSize="40dp"
-                android:text="" />
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#c7f6f7"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="horizontal">
 
-                android:src="@drawable/vandalismo" />
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/vandalismo" />
+
+                <TextView
+                    android:id="@+id/porcentVandalism"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="40dp" />
+
+
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/porcentVandalism"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvVandalismPeriod"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text=""
                 android:textAlignment="center"
-                android:textSize="40dp"
-                android:text="" />
+                android:textColor="#000000"
+                android:textSize="18dp" />
         </LinearLayout>
-
-
-
-
 
 
     </LinearLayout>
