@@ -18,13 +18,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.166"
             android:background="#f7f5c7"
             android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -33,7 +34,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
                     android:src="@drawable/assalto" />
 
                 <TextView
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
+                    android:text="teste titulo"
                     android:textAlignment="center"
                     android:textSize="40dp" />
 
@@ -51,11 +51,11 @@
                 android:id="@+id/tvAssaltPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
+                android:layout_weight="0.166"
+                android:text="teste turno da ocorrencia"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="18dp" />
+                android:textSize="25dp" />
 
 
         </LinearLayout>
@@ -64,6 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fcd5c5"
+            android:layout_weight="0.166"
+            android:paddingBottom="25dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -77,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:src="@drawable/arrombamento_carro" />
 
                 <TextView
@@ -84,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
+                    android:text="teste titulo"
                     android:textAlignment="center"
                     android:textSize="40dp" />
 
@@ -95,11 +98,11 @@
                 android:id="@+id/tvCarBreakInPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
+                android:layout_weight="0.166"
+                android:text="teste turno ocorrencia"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="18dp" />
+                android:textSize="25dp" />
 
 
         </LinearLayout>
@@ -108,8 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#c7f6f7"
-            android:orientation="vertical">
-
+            android:layout_weight="0.166"
+            android:orientation="vertical"
+            android:paddingBottom="25dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -128,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
+                    android:text="teste titulo"
                     android:textAlignment="center"
                     android:textSize="40dp" />
 
@@ -140,11 +144,12 @@
                 android:id="@+id/tvVandalismPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
+                android:layout_weight="0.166"
+                android:text="teste turno ocorrencia"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="18dp" />
+
+                android:textSize="25dp" />
         </LinearLayout>
 
 
