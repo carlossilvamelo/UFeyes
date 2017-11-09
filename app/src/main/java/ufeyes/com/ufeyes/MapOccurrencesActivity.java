@@ -20,7 +20,11 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import ufeyes.com.ufeyes.domain.Assalt;
+import ufeyes.com.ufeyes.domain.CarBreakIn;
+import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.MapOccurrencesService;
 import ufeyes.com.ufeyes.utils.ContextElement;
@@ -108,18 +112,17 @@ public class MapOccurrencesActivity extends FragmentActivity implements OnMapRea
 
 
     @Override
-    public void resultListenerVandalism(String result) {
+    public void resultListenerVandalism(List<Vandalism> vandalism) {
 
     }
 
     @Override
-    public void resultListenerAssalt(String result) {
+    public void resultListenerAssalt(List<Assalt> assalt) {
 
     }
 
     @Override
-    public void resultListenerCarBreakIn(String result) {
-
+    public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
 
     }
 }

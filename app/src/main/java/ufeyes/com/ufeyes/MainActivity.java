@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
             FragmentNotification fragNotif = new FragmentNotification();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragNotif).commit();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
