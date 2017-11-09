@@ -9,8 +9,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ufeyes.com.ufeyes.R;
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
+import ufeyes.com.ufeyes.domain.Occurrence;
 
 /**
  * Created by gustavo on 03/11/2017.
@@ -31,23 +34,40 @@ public class MapOccurrencesService extends IntentService {
 
         System.out.println("Chamada ao service!");
 
-        occurrences.add(new MarkerOptions().position(new LatLng(-5.8382418,-35.2096425))
-                .title("Arrombamento")
-                .snippet("20/10/2017:15:10:12")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_arrombamento)));
-        occurrences.add(new MarkerOptions().position(new LatLng(-5.8322137,-35.2044957))
-                .title("Assalto")
-                .snippet("20/10/2017:15:10:12")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_assalto)));
-        occurrences.add(new MarkerOptions().position(new LatLng(-5.833201,-35.2034012))
-                .title("Vandalismo")
-                .snippet("20/10/2017:15:10:12")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_vandalismo)));
-        occurrences.add(new MarkerOptions().position(new LatLng(-5.8375343,-35.1986939))
-                .title("Assalto")
-                .snippet("20/10/2017:15:10:12")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_assalto)));
+        OccurrenceDAO Odao = new OccurrenceDAO(getApplicationContext());
+        List<Occurrence> list = Odao.listAll();
 
+        for(Occurrence o: list){
+
+            switch (o.getType()){
+
+                case "Arrombamento":
+
+                    occurrences.add(new MarkerOptions().position(new LatLng(o.getLat(),o.getLng()))
+                            .title(o.getType())
+                            .snippet(o.getDate())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_arrombamento)));
+                    break;
+                case "Assalto":
+
+                    occurrences.add(new MarkerOptions().position(new LatLng(o.getLat(),o.getLng()))
+                            .title(o.getType())
+                            .snippet(o.getDate())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_assalto)));
+                    break;
+                default:
+
+                    occurrences.add(new MarkerOptions().position(new LatLng(o.getLat(),o.getLng()))
+                            .title(o.getType())
+                            .snippet(o.getDate())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_vandalismo)));
+                    break;
+
+            }
+
+
+
+        }
 
         publishResults();
 

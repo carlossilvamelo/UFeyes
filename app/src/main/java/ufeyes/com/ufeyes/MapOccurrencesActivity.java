@@ -16,14 +16,11 @@ import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import ufeyes.com.ufeyes.domain.Assalt;
-import ufeyes.com.ufeyes.domain.CarBreakIn;
-import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.MapOccurrencesService;
 import ufeyes.com.ufeyes.utils.ContextElement;
@@ -101,23 +98,28 @@ public class MapOccurrencesActivity extends FragmentActivity implements OnMapRea
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //System.out.println("Ocorrencia: "+occurrence.getTitle());
-        mMap.setMinZoomPreference(17);
-
+        mMap.setMinZoomPreference(16);
+        LatLngBounds UFRN = new LatLngBounds(
+                new LatLng(-5.8400137,-35.2125469), new LatLng(-5.8347,-35.1964387));
+// Constrain the camera target to the Adelaide bounds.
+        mMap.setLatLngBoundsForCameraTarget(UFRN);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ufrn));
     }
 
+
     @Override
-    public void resultListenerVandalism(List<Vandalism> vandalism) {
+    public void resultListenerVandalism(String result) {
 
     }
 
     @Override
-    public void resultListenerAssalt(List<Assalt> assalt) {
+    public void resultListenerAssalt(String result) {
 
     }
 
     @Override
-    public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
+    public void resultListenerCarBreakIn(String result) {
+
 
     }
 }

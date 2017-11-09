@@ -13,17 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.dataLayer.UserDAO;
+import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 import ufeyes.com.ufeyes.utils.RetrieveIp;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeVerificationService;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
+import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
@@ -35,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private Observable observableRequest;
     private String json;
 
+    private UserA user;
+    private UserDAO userDAO;
 
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
@@ -44,6 +51,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //pegando o usuario no br e colocando como usuario logado
+        UsuarioLogado user = UsuarioLogado.getInstance("0001", getApplicationContext());
+        UserA usuarioLogado = user.getUser();
 
         //subscrevendo nas entidades de contexto
 
@@ -75,6 +85,14 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View v = navigationView.getHeaderView(0);
+        //colocando o nome do usuário na tela de menu
+        if(usuarioLogado != null) {
+            TextView username_tv = (TextView) v.findViewById(R.id.username);
+
+            username_tv.setText(usuarioLogado.getNome());
+        }
 
         //verificando é a primeira vez que o aplicativo é aberto
         //para sobrescrever nas entidades do oreon
