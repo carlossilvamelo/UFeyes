@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        , MinhasDenunciasFragment.OnFragmentInteractionListener {
+        , MinhasDenunciasFragment.OnFragmentInteractionListener
+        , FragmentNotification.OnFragmentInteractionListener{
 
 
     private Observable observableRequest;
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity
             FragmentNotification fragNotif = new FragmentNotification();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragNotif).commit();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
