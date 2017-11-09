@@ -1,10 +1,12 @@
 package ufeyes.com.ufeyes.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by carlo on 14/10/2017.
  */
 
-public class Ocorrencia {
+public class Ocorrencia implements Serializable{
 
     private String id;
     private Localization localizacao;

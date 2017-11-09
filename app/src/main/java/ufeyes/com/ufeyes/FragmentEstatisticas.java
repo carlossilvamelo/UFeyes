@@ -4,22 +4,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.domain.Assalt;
+import ufeyes.com.ufeyes.domain.CarBreakIn;
+import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
-import ufeyes.com.ufeyes.serviceLayer.QueryRequestService;
-import ufeyes.com.ufeyes.utils.DateTime;
-import ufeyes.com.ufeyes.utils.ParseContextElement;
-import ufeyes.com.ufeyes.utils.ContextElement;
-import ufeyes.com.ufeyes.utils.TimestampManager;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceAssalt;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceCarBreakIn;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceVandalism;
 
 
 /**
@@ -77,10 +79,13 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         super.onCreate(savedInstanceState);
 
 
-        QueryRequestService queryRequestService = new QueryRequestService();
-        queryRequestService.getAllVandalism();
-        queryRequestService.getAllAssalt();
-        queryRequestService.getAllCarBreakIn();
+        QueryRequestServiceAssalt queryRequestServiceAssalt = new QueryRequestServiceAssalt();
+        QueryRequestServiceVandalism queryRequestServiceVandalism = new QueryRequestServiceVandalism();
+        QueryRequestServiceCarBreakIn queryRequestServiceCarBreakIn = new QueryRequestServiceCarBreakIn();
+        queryRequestServiceVandalism.getAllVandalism();
+        queryRequestServiceAssalt.getAllAssalt();
+        queryRequestServiceCarBreakIn.getAllCarBreakIn();
+
 
 
 
@@ -136,69 +141,10 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     }
     private static float totalOccorrences, numVandalism, numCarBreakIn, numAssalt;
-    private static ArrayList<ContextElement> listVandalism, listAssalt, listCarBreakIn;
     private static int barrier = 0;
 
-    @Override
-    public void resultListenerVandalism(String result) {
-        ArrayList<ContextElement> listVandalism = ParseContextElement.getContextResponse(result);
-        numVandalism = listVandalism.size();
-        barrier++;
-
-    }
-
-    @Override
-    public void resultListenerAssalt(String result) {
-        ArrayList<ContextElement> listAssalt = ParseContextElement.getContextResponse(result);
-        numAssalt = listAssalt.size();
-        barrier++;
 
 
-    }
-
-    @Override
-    public void resultListenerCarBreakIn(String result) {
-        ArrayList<ContextElement> listCarBreakIn = ParseContextElement.getContextResponse(result);
-        numCarBreakIn = listCarBreakIn.size();
-        barrier++;
-
-        attPercentOcorrences();
-    }
-
-    private void attPeriodsOccorrences(){
-        DateTime dateTime;
-        int noite =0;
-        int manha = 0;
-        int tarde = 0;
-        String maior="";
-       if(listVandalism != null){
-           for (ContextElement ce : listVandalism) {
-               dateTime = TimestampManager.stringToTimestamp(ce.getId());
-               if((dateTime.getHour()>5)&&(dateTime.getHour()<=12)){
-                   manha++;
-               }
-               if((dateTime.getHour()>12)&&(dateTime.getHour()<=18)){
-                    tarde++;
-               }
-               if((dateTime.getHour()>18)&&(dateTime.getHour()<=0)){
-                    noite++;
-               }
-           }
-
-           //ordenando
-           if(manha>=tarde && manha>=noite)
-               maior = "manhã";
-
-           if(tarde >=manha && tarde>=noite)
-               maior = "tarde";
-
-           if(noite >=tarde && noite>=manha)
-               maior = "noite";
-
-           tvVandalismPeriod.setText("Período de maior risco: ");
-       }
-
-    }
     private void attPercentOcorrences(){
         DecimalFormat df = new DecimalFormat("0.00");
         while(barrier != 3){
@@ -209,9 +155,38 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         porcentVandalism.setText(df.format((numVandalism/totalOccorrences)*100)+"%");
         porcentCarBreakIn.setText(df.format((numCarBreakIn/totalOccorrences)*100)+"%");
         porcentAssalt.setText(df.format((numAssalt/totalOccorrences)*100)+"%");
-        tvVandalismPeriod.setText("Período de maior risco: ");
-        attPeriodsOccorrences();
+
+
     }
+
+    @Override
+    public void resultListenerVandalism(List<Vandalism> vandalism) {
+        numVandalism = vandalism.size();
+        Vandalism v = vandalism.get(0);
+        Log.i("objVandalism",v.getUsuario().getIdUser()+" ");
+       Log.i("objVandalism",v.getLocalizacao().getLatitude()+" ");
+        Log.i("objAssalt",v.getThugList().size()+" ");
+    barrier++;
+    }
+
+    @Override
+    public void resultListenerAssalt(List<Assalt> assalt) {
+        numAssalt = assalt.size();
+        Log.i("objAssalt",assalt.get(0).getUsuario().getIdUser()+" ");
+        Log.i("objAssalt",assalt.get(0).getLocalizacao().getLatitude()+" ");
+        Log.i("objAssalt",assalt.get(0).getThugList().size()+" ");
+    barrier++;
+    }
+
+    @Override
+    public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
+        numCarBreakIn = carBreakIn.size();
+        barrier++;
+        attPercentOcorrences();
+        Log.i("objCarBreakIn",carBreakIn.get(0).getUsuario().getIdUser()+" ");
+        Log.i("objCarBreakIn",carBreakIn.get(0).getLocalizacao().getLatitude()+" ");
+    }
+
 
 
     /**

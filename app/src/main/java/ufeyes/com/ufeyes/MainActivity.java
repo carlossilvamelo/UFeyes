@@ -13,30 +13,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.dataLayer.UserDAO;
+import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 import ufeyes.com.ufeyes.utils.RetrieveIp;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeVerificationService;
 import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
+import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
-        , MapaOcorrenciasFragment.OnFragmentInteractionListener {
+        , MinhasDenunciasFragment.OnFragmentInteractionListener
+        , FragmentNotification.OnFragmentInteractionListener{
 
 
     private Observable observableRequest;
     private String json;
 
-
-
+    private UserA user;
+    private UserDAO userDAO;
 
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
@@ -46,6 +52,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //pegando o usuario no br e colocando como usuario logado
+        UsuarioLogado user = UsuarioLogado.getInstance("0001", getApplicationContext());
+        UserA usuarioLogado = user.getUser();
 
         //subscrevendo nas entidades de contexto
 
@@ -54,11 +63,10 @@ public class MainActivity extends AppCompatActivity
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.corrent_layout,fragmentInicial).commit();
+                .replace(R.id.corrent_layout, fragmentInicial).commit();
 
         ObservableRequest observableRequest = new ObservableRequest();
         construtorObservable(observableRequest);
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,6 +86,14 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View v = navigationView.getHeaderView(0);
+        //colocando o nome do usuário na tela de menu
+        if(usuarioLogado != null) {
+            TextView username_tv = (TextView) v.findViewById(R.id.username);
+
+            username_tv.setText(usuarioLogado.getNome());
+        }
 
         //verificando é a primeira vez que o aplicativo é aberto
         //para sobrescrever nas entidades do oreon
@@ -114,6 +130,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_notification){
+            FragmentNotification fragNotif = new FragmentNotification();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, fragNotif).commit();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -130,20 +152,19 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             PrincipalFragment fragPrincipal = new PrincipalFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragPrincipal).commit();
+                    .replace(R.id.corrent_layout, fragPrincipal).commit();
         } else if (id == R.id.minhas_denuncias) {
-
-        }else if (id == R.id.estatisticas) {
+            MinhasDenunciasFragment minhasDenunciasFragment = new MinhasDenunciasFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, minhasDenunciasFragment).commit();
+        } else if (id == R.id.estatisticas) {
             FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragmentEstatisticas).commit();
-        }
-        else if (id == R.id.mapa_ocorrencias) {
+                    .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
+        } else if (id == R.id.mapa_ocorrencias) {
 
-            MapaOcorrenciasFragment fragMapa = new MapaOcorrenciasFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, fragMapa).commit();
-
+            Intent intent = new Intent(this, MapOccurrencesActivity.class);
+            startActivity(intent);
 
         }
 
@@ -153,13 +174,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
 
     public void construtorObservable(Observable obs) {
@@ -170,7 +188,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Metodo listener das requisições do oreo (notificações)
-     * */
+     */
     @Override
     public void update(Observable observable, Object arg) {
         if (observable instanceof ObservableRequest) {
@@ -195,11 +213,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT).show();
                 }
             });
-           //System.out.println("chegou");
+            //System.out.println("chegou");
         }
     }
-
-
-
-
 }

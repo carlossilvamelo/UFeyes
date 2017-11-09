@@ -12,4 +12,12 @@
     <string name="title_activity_confirmation">ConfirmationActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_map_occurrences">Map</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="obter_dados_btn">Dados da api</string>
+    <string name="logintxt">Efetuar login</string>
+    <string name="sair_btn">Sairs</string>
+
 </resources>

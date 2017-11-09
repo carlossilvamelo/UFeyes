@@ -2,10 +2,26 @@ package ufeyes.com.ufeyes.serviceLayer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.sql.SQLOutput;
+import java.util.Date;
+
+import ufeyes.com.ufeyes.R;
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
+import ufeyes.com.ufeyes.dataLayer.UserDAO;
+import ufeyes.com.ufeyes.domain.UserA;
+import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
 /**
  * Created by carlo on 30/10/2017.
@@ -30,8 +46,8 @@ public class LocationService {
         this.longitude = longitude;
     }
 
-    private Double latitude = null;
-    private Double longitude = null;
+    public static Double latitude = null;
+    public static Double longitude = null;
     Location location;
     public LocationService(Activity activity) {
         this.activity = activity;
@@ -61,10 +77,8 @@ public class LocationService {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
 
-            // tvLatitude.setText("Latitude: " + latitude);
-            // tvLongitude.setText("Longitude: " + longitude);
         }
 
-
     }
+
 }

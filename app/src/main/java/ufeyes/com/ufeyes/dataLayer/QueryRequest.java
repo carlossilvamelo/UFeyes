@@ -11,8 +11,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import ufeyes.com.ufeyes.FragmentEstatisticas;
-import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.IQueryRequestListener;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceAssalt;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceCarBreakIn;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceVandalism;
 
 /**
  * Created by carlo on 17/10/2017.
@@ -30,7 +32,7 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
         this.type = type;
     }
 
-    private IRequestOcorrenceListener interfaceListener = null;
+    private IQueryRequestListener iQueryRequestListener = null;
 
 
 
@@ -79,20 +81,61 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
     }
 
     @Override
+
     protected void onPostExecute(String s){
-        Log.i("post",s);
+        Log.i("DataLayerJson",s);
+        Log.i("DataLayer","QueryRequest response "+type);
         if(type.equals("Vandalism")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerVandalism(s);
+            iQueryRequestListener = new QueryRequestServiceVandalism();
+            iQueryRequestListener.resultListenerVandalism(s);
         }
         if(type.equals("CarBreakIn")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerCarBreakIn(s);
+            iQueryRequestListener = new QueryRequestServiceCarBreakIn();
+            iQueryRequestListener.resultListenerCarBreakIn(s);
         }
         if(type.equals("Assalt")){
-            interfaceListener = new FragmentEstatisticas();
-            interfaceListener.resultListenerAssalt(s);
+            iQueryRequestListener = new QueryRequestServiceAssalt();
+            iQueryRequestListener.resultListenerAssalt(s);
         }
+
+        if(type.equals("UserVandalism")){
+            iQueryRequestListener = new QueryRequestServiceVandalism();
+            iQueryRequestListener.resultListenerUser(s);
+        }
+        if(type.equals("LocalizationVandalism")){
+            iQueryRequestListener = new QueryRequestServiceVandalism();
+            iQueryRequestListener.resultListenerLocalization(s);
+        }
+        if(type.equals("ThugVandalism")){
+            iQueryRequestListener = new QueryRequestServiceVandalism();;
+            iQueryRequestListener.resultListenerLocaThug(s);
+        }
+
+
+        if(type.equals("UserAssalt")){
+            iQueryRequestListener = new QueryRequestServiceAssalt();
+            iQueryRequestListener.resultListenerUser(s);
+        }
+        if(type.equals("LocalizationAssalt")){
+            iQueryRequestListener = new QueryRequestServiceAssalt();
+            iQueryRequestListener.resultListenerLocalization(s);
+        }
+        if(type.equals("ThugAssalt")){
+            iQueryRequestListener = new QueryRequestServiceAssalt();
+            iQueryRequestListener.resultListenerLocaThug(s);
+        }
+
+
+        if(type.equals("UserCarBreakIn")){
+            iQueryRequestListener = new QueryRequestServiceCarBreakIn();
+            iQueryRequestListener.resultListenerUser(s);
+        }
+        if(type.equals("LocalizationCarBreakIn")){
+            iQueryRequestListener = new QueryRequestServiceCarBreakIn();
+            iQueryRequestListener.resultListenerLocalization(s);
+        }
+
+
 
 
     }

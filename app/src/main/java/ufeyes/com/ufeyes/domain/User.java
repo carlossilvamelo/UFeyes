@@ -1,10 +1,12 @@
 package ufeyes.com.ufeyes.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by carlo on 14/10/2017.
  */
 
-public class User {
+public class User implements Serializable {
 
     private int condition;
     private String idUser;
