@@ -22,6 +22,7 @@ import ufeyes.com.ufeyes.domain.Ocorrencia;
 import ufeyes.com.ufeyes.domain.User;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.utils.ArrayAdapterOccorrence;
+import ufeyes.com.ufeyes.utils.NotificationOcurrenceAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,7 +122,7 @@ public class FragmentNotification extends Fragment {
         ocorrenciaList.add(assalt);
 
         lvMinhasNotif = (ListView) view.findViewById(R.id.lst_items);
-        ArrayAdapterOccorrence adapter = new ArrayAdapterOccorrence(ocorrenciaList, getActivity());
+        NotificationOcurrenceAdapter adapter = new NotificationOcurrenceAdapter(ocorrenciaList, getActivity());
         lvMinhasNotif.setAdapter(adapter);
         lvMinhasNotif.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,7 +174,6 @@ public class FragmentNotification extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
