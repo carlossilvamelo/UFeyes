@@ -16,6 +16,7 @@ import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -97,8 +98,11 @@ public class MapOccurrencesActivity extends FragmentActivity implements OnMapRea
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //System.out.println("Ocorrencia: "+occurrence.getTitle());
-        mMap.setMinZoomPreference(17);
-
+        mMap.setMinZoomPreference(16);
+        LatLngBounds UFRN = new LatLngBounds(
+                new LatLng(-5.8400137,-35.2125469), new LatLng(-5.8347,-35.1964387));
+// Constrain the camera target to the Adelaide bounds.
+        mMap.setLatLngBoundsForCameraTarget(UFRN);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ufrn));
     }
 

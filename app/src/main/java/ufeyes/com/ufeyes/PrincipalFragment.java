@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Localization;
 import ufeyes.com.ufeyes.domain.User;
+import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.enumerations.EnumUserCondition;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
 import ufeyes.com.ufeyes.serviceLayer.LocationService;
+import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
 
 /**
@@ -142,6 +147,27 @@ public class PrincipalFragment extends Fragment {
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertAssaltEntity(newAssalt);
 
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Assalto", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence assalt");
+                        }
+
 
                     }
 
@@ -171,6 +197,29 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Arrombamento", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence arrombamento");
+                        }
+
+
                     }
 
                 });
@@ -199,6 +248,28 @@ public class PrincipalFragment extends Fragment {
                         //enviando requisição
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertVandalismEntity(newVandalism);
+
+                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+                        UserA usuarioLogado = user.getUser();
+
+                        //cadastra uma nova ocorrencia no bd
+                        String time  = new Date().toString();
+                        Log.d("Data da localizacao ", time);
+                        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+                        //if(sucessUser){
+                        // System.out.println("Success user");
+                        //}
+
+                        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+                        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Vandalismo", usuarioLogado.getId(), time);
+                        if(sucessOccurrenc){
+                            System.out.println("Success occurrence vandalism");
+                        }
+
                     }
 
                 });
