@@ -79,9 +79,11 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         super.onCreate(savedInstanceState);
 
 
-        QueryRequestServiceAssalt queryRequestServiceAssalt = new QueryRequestServiceAssalt();
-        QueryRequestServiceVandalism queryRequestServiceVandalism = new QueryRequestServiceVandalism();
-        QueryRequestServiceCarBreakIn queryRequestServiceCarBreakIn = new QueryRequestServiceCarBreakIn();
+        QueryRequestServiceAssalt queryRequestServiceAssalt = new QueryRequestServiceAssalt(new FragmentEstatisticas());
+        QueryRequestServiceVandalism queryRequestServiceVandalism =
+                new QueryRequestServiceVandalism(new FragmentEstatisticas());
+        QueryRequestServiceCarBreakIn queryRequestServiceCarBreakIn =
+                new QueryRequestServiceCarBreakIn(new FragmentEstatisticas());
         queryRequestServiceVandalism.getAllVandalism();
         queryRequestServiceAssalt.getAllAssalt();
         queryRequestServiceCarBreakIn.getAllCarBreakIn();

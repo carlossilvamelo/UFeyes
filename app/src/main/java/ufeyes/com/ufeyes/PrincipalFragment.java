@@ -132,6 +132,7 @@ public class PrincipalFragment extends Fragment {
 
                         //criando localização
                         Localization newLocalization = new Localization();
+                        newLocalization.setTimeStamp(TimestampManager.getTimeStamp());
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
                         newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
@@ -184,6 +185,7 @@ public class PrincipalFragment extends Fragment {
                         LocationService locationService = new LocationService(getActivity());
                         locationService.pegarOrientacao();
                         Localization newLocalization = new Localization();
+                        newLocalization.setTimeStamp(TimestampManager.getTimeStamp());
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
                         newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
@@ -236,6 +238,7 @@ public class PrincipalFragment extends Fragment {
                         LocationService locationService = new LocationService(getActivity());
                         locationService.pegarOrientacao();
                         Localization newLocalization = new Localization();
+                        newLocalization.setTimeStamp(TimestampManager.getTimeStamp());
                         newLocalization.setLatitude(locationService.getLatitude());
                         newLocalization.setLongitude(locationService.getLongitude());
                         newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());

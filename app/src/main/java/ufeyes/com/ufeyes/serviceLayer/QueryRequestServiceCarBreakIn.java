@@ -29,10 +29,15 @@ public class QueryRequestServiceCarBreakIn implements IQueryRequestListener {
     private QueryRequest queryRequestCarBreakIn = new QueryRequest("CarBreakIn");
     private QueryRequest queryRequestUser = new QueryRequest("UserCarBreakIn");
     private QueryRequest queryRequestLocalization = new QueryRequest("LocalizationCarBreakIn");
-    IRequestOcorrenceListener iRequestOcorrenceListener;
+    private static IRequestOcorrenceListener iRequestOcorrenceListener;
     private static ArrayList<ContextElement> listCarBreakIn =null, listUser=null, listLocalization=null;
     private User userForRequest = null;
 
+    public  QueryRequestServiceCarBreakIn(){
+    }
+    public  QueryRequestServiceCarBreakIn(IRequestOcorrenceListener iRequestOcorrenceListener){
+        this.iRequestOcorrenceListener = iRequestOcorrenceListener;
+    }
     private static int barrierCarBreakIn;
 
 
@@ -167,7 +172,7 @@ public class QueryRequestServiceCarBreakIn implements IQueryRequestListener {
         }//for (ContextElement ce : listAssalt)
 
 
-        iRequestOcorrenceListener = new FragmentEstatisticas();
+       // iRequestOcorrenceListener = new FragmentEstatisticas();
         iRequestOcorrenceListener.resultListenerCarBreakIn(carBreakInList);
 
     }//sendAssalt()

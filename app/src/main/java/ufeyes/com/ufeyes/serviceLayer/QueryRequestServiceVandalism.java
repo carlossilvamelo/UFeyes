@@ -29,12 +29,18 @@ public class QueryRequestServiceVandalism implements IQueryRequestListener {
     private QueryRequest queryRequestThug = new QueryRequest("ThugVandalism");
     private QueryRequest queryRequestUser = new QueryRequest("UserVandalism");
     private QueryRequest queryRequestLocalization = new QueryRequest("LocalizationVandalism");
-    IRequestOcorrenceListener iRequestOcorrenceListener;
+    private static IRequestOcorrenceListener iRequestOcorrenceListener;
     private static ArrayList<ContextElement> listVandalism =null,listThug=null, listUser=null, listLocalization=null;
     private User userForRequest = null;
 
     private static int barrierVandalism;
+    public  QueryRequestServiceVandalism(IRequestOcorrenceListener iRequestOcorrenceListener){
+        this.iRequestOcorrenceListener = iRequestOcorrenceListener;
+    }
 
+    public  QueryRequestServiceVandalism( ){
+
+    }
 
 
     public void getAllVandalism() {
@@ -218,7 +224,7 @@ public class QueryRequestServiceVandalism implements IQueryRequestListener {
         }//for (ContextElement ce : listAssalt)
 
 
-        iRequestOcorrenceListener = new FragmentEstatisticas();
+      //  iRequestOcorrenceListener = new FragmentEstatisticas();
         iRequestOcorrenceListener.resultListenerVandalism(vandalismList);
 
     }//sendAssalt()

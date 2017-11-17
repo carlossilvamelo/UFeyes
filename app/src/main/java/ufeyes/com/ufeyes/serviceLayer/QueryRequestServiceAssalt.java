@@ -27,13 +27,17 @@ public class QueryRequestServiceAssalt implements IQueryRequestListener {
     private QueryRequest queryRequestThug = new QueryRequest("ThugAssalt");
     private QueryRequest queryRequestUser = new QueryRequest("UserAssalt");
     private QueryRequest queryRequestLocalization = new QueryRequest("LocalizationAssalt");
-    IRequestOcorrenceListener iRequestOcorrenceListener;
+    private static IRequestOcorrenceListener iRequestOcorrenceListener;
     private static ArrayList<ContextElement> listAssalt =null, listUser=null, listThug=null, listLocalization=null;
     private User userForRequest = null;
 
     private static int barrierAssalt;
+    public  QueryRequestServiceAssalt(IRequestOcorrenceListener iRequestOcorrenceListener){
+        this.iRequestOcorrenceListener = iRequestOcorrenceListener;
+    }
 
-
+    public  QueryRequestServiceAssalt(){
+    }
     public void getAllAssalt() {
         queryRequestUser.execute(ParseQueryRequestJson.jsonAllUser());
         queryRequestThug.execute(ParseQueryRequestJson.jsonAllThug());
@@ -220,7 +224,7 @@ public class QueryRequestServiceAssalt implements IQueryRequestListener {
         }//for (ContextElement ce : listAssalt)
 
 
-        iRequestOcorrenceListener = new FragmentEstatisticas();
+       // iRequestOcorrenceListener = new FragmentEstatisticas();
         iRequestOcorrenceListener.resultListenerAssalt(assaltList);
 
     }//sendAssalt()
@@ -321,7 +325,7 @@ public class QueryRequestServiceAssalt implements IQueryRequestListener {
         }//for (ContextElement ce : listAssalt)
 
 
-        iRequestOcorrenceListener = new FragmentEstatisticas();
+     //   iRequestOcorrenceListener = new FragmentEstatisticas();
         iRequestOcorrenceListener.resultListenerAssalt(assaltList);
 
     }//sendAssalt()

@@ -1,11 +1,11 @@
 package ufeyes.com.ufeyes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +21,10 @@ import ufeyes.com.ufeyes.domain.Localization;
 import ufeyes.com.ufeyes.domain.Ocorrencia;
 import ufeyes.com.ufeyes.domain.User;
 import ufeyes.com.ufeyes.domain.Vandalism;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceAssalt;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceCarBreakIn;
+import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceVandalism;
 import ufeyes.com.ufeyes.utils.ArrayAdapterOccorrence;
 
 /**
@@ -31,7 +35,7 @@ import ufeyes.com.ufeyes.utils.ArrayAdapterOccorrence;
  * Use the {@link MinhasDenunciasFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MinhasDenunciasFragment extends Fragment {
+public class MinhasDenunciasFragment extends Fragment implements IRequestOcorrenceListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,8 +44,12 @@ public class MinhasDenunciasFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static List<Assalt> listAssalt;
+    private static List<Vandalism> listVandalism;
+    private static List<CarBreakIn> listCarBreakIn;
 
-    private ListView lvMinhasOcorrencias;
+    private static int barrier = 0;
+    private static ListView lvMinhasOcorrencias = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,64 +83,27 @@ public class MinhasDenunciasFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        QueryRequestServiceAssalt queryRequestServiceAssalt = new QueryRequestServiceAssalt(new MinhasDenunciasFragment());
+        QueryRequestServiceVandalism queryRequestServiceVandalism =
+                new QueryRequestServiceVandalism(new MinhasDenunciasFragment());
+        QueryRequestServiceCarBreakIn queryRequestServiceCarBreakIn =
+                new QueryRequestServiceCarBreakIn(new MinhasDenunciasFragment());
+        queryRequestServiceVandalism.getAllVandalism();
+        queryRequestServiceAssalt.getAllAssalt();
+        queryRequestServiceCarBreakIn.getAllCarBreakIn();
 
 
     }
+
+    private static Activity act;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_minhas_denuncias, container, false);
-
-        //mock
-        Localization localization = new Localization();
-        localization.setTimeStamp("timestamp");
-        localization.setLatitude(5.323423);
-        localization.setLongitude(5.323423);
-        localization.setIdLocalizacao("id");
-
-        User user = new User();
-        user.setIdUser("userId");
-
-        //objetos mock
-        Assalt assalt = new Assalt();
-        assalt.setId("timestamp");
-        assalt.setUsuario(user);
-        assalt.setLocalizacao(localization);
-
-        CarBreakIn carBreakIn = new CarBreakIn();
-        carBreakIn.setId("timestamp");
-        carBreakIn.setUsuario(user);
-        carBreakIn.setLocalizacao(localization);
-
-        Vandalism vandalism = new Vandalism();
-        vandalism.setId("timestamp");
-        vandalism.setUsuario(user);
-        vandalism.setLocalizacao(localization);
-
-
-        final ArrayList<Ocorrencia> ocorrenciaList = new ArrayList<Ocorrencia>();
-        ocorrenciaList.add(assalt);
-        ocorrenciaList.add(carBreakIn);
-        ocorrenciaList.add(assalt);
-        ocorrenciaList.add(vandalism);
-        ocorrenciaList.add(assalt);
-        ocorrenciaList.add(assalt);
-
         lvMinhasOcorrencias = (ListView) view.findViewById(R.id.lista);
-        ArrayAdapterOccorrence adapter = new ArrayAdapterOccorrence(ocorrenciaList, getActivity());
-        lvMinhasOcorrencias.setAdapter(adapter);
-        lvMinhasOcorrencias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), EditarOcorrenciaActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("occorrence",ocorrenciaList.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        act = getActivity();
 
 
         return view;
@@ -160,6 +131,78 @@ public class MinhasDenunciasFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void resultListenerVandalism(List<Vandalism> vandalism) {
+        listVandalism = vandalism;
+        barrier++;
+    }
+
+    @Override
+    public void resultListenerAssalt(List<Assalt> assalt) {
+        listAssalt = assalt;
+        barrier++;
+    }
+
+    @Override
+    public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
+        listCarBreakIn = carBreakIn;
+        barrier++;
+        attListViewOccurrence(act);
+    }
+
+    private void attListViewOccurrence(Activity act) {
+        while (barrier != 3) {
+
+        }
+        barrier = 0;
+        //setar lista
+        final ArrayList<Ocorrencia> ocorrenciaList = new ArrayList<Ocorrencia>();
+        User user = new User();
+        user.setIdUser("123");
+        user.setCondition(1);
+
+        Localization l = new Localization();
+        l.setIdLocalizacao("adasd");
+        l.setLatitude(5.44);
+        l.setLongitude(4.13);
+        l.setTimeStamp("123123");
+        Assalt assalt = new Assalt();
+
+        assalt.setUsuario(user);
+        assalt.setLocalizacao(l);
+        assalt.setId("asdasd");
+        ocorrenciaList.add(assalt);
+        //ocorrenciaList.add(new Assalt());
+        // ocorrenciaList.addAll(listAssalt);
+       //  ocorrenciaList.addAll(listCarBreakIn);
+        for (Vandalism v: listVandalism) {
+           if(v.getLocalizacao() != null)
+                ocorrenciaList.add(v);
+        }
+        for (Assalt a: listAssalt) {
+            if(a.getLocalizacao() != null)
+                ocorrenciaList.add(a);
+        }
+        for (CarBreakIn c: listCarBreakIn) {
+            if(c.getLocalizacao() != null)
+                ocorrenciaList.add(c);
+        }
+
+        ArrayAdapterOccorrence adapter = new ArrayAdapterOccorrence(ocorrenciaList, act);
+        lvMinhasOcorrencias.setAdapter(adapter);
+      /*  lvMinhasOcorrencias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), EditarOcorrenciaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("occorrence",ocorrenciaList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });*/
+
     }
 
     /**
