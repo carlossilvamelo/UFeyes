@@ -1,9 +1,11 @@
 
 package ufeyes.com.ufeyes.charting.data;
 
-import ufeyes.com.ufeyes.charting.interfaces.datasets.IBarDataSet;
+
 
 import java.util.List;
+
+import ufeyes.com.ufeyes.charting.interfaces.datasets.IBarDataSet;
 
 /**
  * Data object that represents all data for the BarChart.
