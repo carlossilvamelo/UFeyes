@@ -1,5 +1,6 @@
 package ufeyes.com.ufeyes;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
+
 
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
@@ -158,7 +160,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, minhasDenunciasFragment).commit();
         } else if (id == R.id.estatisticas) {
-            FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            //FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            EstatisticaChart fragmentEstatisticas = new EstatisticaChart();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
         } else if (id == R.id.mapa_ocorrencias) {

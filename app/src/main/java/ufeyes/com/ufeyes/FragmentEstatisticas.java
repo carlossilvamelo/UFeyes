@@ -166,11 +166,7 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
 
     }
-    private void attPeriodOccurrences(){
-        tvAssaltPeriod.setText("Período de maior ocorrência: "+TimestampManager.calculatePeriodAssalt(listAssalt));
-        tvCarBreakInPeriod.setText("Período de maior ocorrência: "+TimestampManager.calculatePeriodCarBreakIn(listCarBreakIn));
-        tvVandalismPeriod.setText("Período de maior ocorrência: "+TimestampManager.calculatePeriodVandalism(listVandalism));
-    }
+
 
 
 
@@ -202,7 +198,6 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
         numCarBreakIn = listCarBreakIn.size();
         barrier++;
         attPercentOccurrences();
-        attPeriodOccurrences();
         Log.i("objCarBreakIn",carBreakIn.get(0).getUsuario().getIdUser()+" ");
         Log.i("objCarBreakIn",carBreakIn.get(0).getLocalizacao().getLatitude()+" ");
     }
