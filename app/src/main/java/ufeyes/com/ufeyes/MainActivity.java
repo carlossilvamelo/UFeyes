@@ -51,10 +51,9 @@ public class MainActivity extends AppCompatActivity
         , FragmentEstatisticas.OnFragmentInteractionListener
         , PrincipalFragment.OnFragmentInteractionListener
         , MinhasDenunciasFragment.OnFragmentInteractionListener
-        , FragmentNotification.OnFragmentInteractionListener
-        , OnMapReadyCallback {
+        , FragmentNotification.OnFragmentInteractionListener{
 
-    private GoogleMap map;
+
     private Observable observableRequest;
     private String json;
 
@@ -63,47 +62,6 @@ public class MainActivity extends AppCompatActivity
 
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
-
-    private LatLng ufrn = new LatLng(-5.8382418, -35.2096425);
-    private ArrayList<MarkerOptions> listOccurrence;
-
-
-    //recebe o resultado do processamento do service
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Bundle bundle = intent.getParcelableExtra("bundle");
-            System.out.println("Serviço Ocorrencias");
-
-            if (intent != null) {
-
-                ArrayList<MarkerOptions> occurrences = intent.getParcelableArrayListExtra("occurrences");
-                System.out.println("Num occorrencias: " + occurrences.size());
-                listOccurrence = occurrences;
-
-                for (MarkerOptions mo : occurrences) {
-                    map.addMarker(mo).showInfoWindow();
-                    map.moveCamera(CameraUpdateFactory.newLatLng(mo.getPosition()));
-                }
-            }
-        }
-    };
-
-    private BroadcastReceiver receiverAlert = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Bundle bundle = intent.getParcelableExtra("bundle");
-            System.out.println("Serviço alert");
-            if (intent != null) {
-                    String alert = intent.getStringExtra("alert");
-
-                    Toast.makeText(getParent(), alert,Toast.LENGTH_LONG).show();
-
-            }
-        }
-    };
 
 
     @Override
@@ -121,19 +79,11 @@ public class MainActivity extends AppCompatActivity
         UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getApplicationContext());
         UserA usuarioLogado = user.getUser();
 
-        // use this to start and trigger a service
-        Intent occurrenceService = new Intent(this, MapOccurrencesService.class);
-        // potentially add data to the intent
-        startService(occurrenceService);
-
-        Intent alertService = new Intent(this, AlertService.class);
-        // potentially add data to the intent
-        startService(alertService);
-
         //subscrevendo nas entidades de contexto
 
         SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
         subscribeRequestService.setSubscribeAllEntities();
+
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
@@ -146,9 +96,6 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
 
         //listener de notificações
@@ -238,6 +185,12 @@ public class MainActivity extends AppCompatActivity
             FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
+        }else if (id == R.id.mapa_ocorrencias){
+
+            MapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, mapFragment).commit();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -287,45 +240,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
 
-        map = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        map.setMyLocationEnabled(true);
-        //System.out.println("Ocorrencia: "+occurrence.getTitle());
-        map.setMinZoomPreference(17);
-        LatLngBounds UFRN = new LatLngBounds(
-                new LatLng(-5.8400137,-35.2125469), new LatLng(-5.8347,-35.1964387));
-        // Constrain the camera target to the Adelaide bounds.
-        //map.setLatLngBoundsForCameraTarget(UFRN);
-        map.moveCamera(CameraUpdateFactory.newLatLng(ufrn));
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //registra quem estara pronto pra receber o evento
-        registerReceiver(receiver, new IntentFilter("ufeyes.com.ufeyes"));
-        registerReceiver(receiverAlert, new IntentFilter("ufeyes.com;ufeyes"));
-
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //remove do reggitro
-        unregisterReceiver(receiver);
-        unregisterReceiver(receiverAlert);
-    }
 }
