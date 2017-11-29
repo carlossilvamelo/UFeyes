@@ -12,6 +12,8 @@ public class ContextElement {
     private String isPattern;
     private String id;
     private List<Atributo> attributes;
+
+
     public String getType() {
         return type;
     }

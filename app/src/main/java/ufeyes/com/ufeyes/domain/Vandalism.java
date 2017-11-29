@@ -1,14 +1,23 @@
 package ufeyes.com.ufeyes.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by carlo on 14/10/2017.
  */
 
-public class Vandalism extends Ocorrencia{
+public class Vandalism extends Ocorrencia implements Serializable {
 
+    private List<Thug> thugList;
 
+    public List<Thug> getThugList() {
+        return thugList;
+    }
+
+    public void setThugList(List<Thug> thugList) {
+        this.thugList = thugList;
+    }
 
     public Vandalism(User usuario, Localization localizacao) {
         super(usuario, localizacao);

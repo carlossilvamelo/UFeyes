@@ -1,5 +1,6 @@
 package ufeyes.com.ufeyes;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import java.util.Observable;
 import java.util.Observer;
 
+
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
@@ -33,7 +35,9 @@ import ufeyes.com.ufeyes.utils.UsuarioLogado;
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
-        , PrincipalFragment.OnFragmentInteractionListener{
+        , PrincipalFragment.OnFragmentInteractionListener
+        , MinhasDenunciasFragment.OnFragmentInteractionListener
+        , FragmentNotification.OnFragmentInteractionListener{
 
 
     private Observable observableRequest;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity
 
     private UserA user;
     private UserDAO userDAO;
-
 
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
@@ -62,11 +65,10 @@ public class MainActivity extends AppCompatActivity
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.corrent_layout,fragmentInicial).commit();
+                .replace(R.id.corrent_layout, fragmentInicial).commit();
 
         ObservableRequest observableRequest = new ObservableRequest();
         construtorObservable(observableRequest);
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,6 +132,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_notification){
+            FragmentNotification fragNotif = new FragmentNotification();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, fragNotif).commit();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -146,15 +154,17 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             PrincipalFragment fragPrincipal = new PrincipalFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragPrincipal).commit();
+                    .replace(R.id.corrent_layout, fragPrincipal).commit();
         } else if (id == R.id.minhas_denuncias) {
-
-        }else if (id == R.id.estatisticas) {
-            FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            MinhasDenunciasFragment minhasDenunciasFragment = new MinhasDenunciasFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout,fragmentEstatisticas).commit();
-        }
-        else if (id == R.id.mapa_ocorrencias) {
+                    .replace(R.id.corrent_layout, minhasDenunciasFragment).commit();
+        } else if (id == R.id.estatisticas) {
+            //FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            EstatisticaChart fragmentEstatisticas = new EstatisticaChart();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
+        } else if (id == R.id.mapa_ocorrencias) {
 
             Intent intent = new Intent(this, MapOccurrencesActivity.class);
             startActivity(intent);
@@ -167,13 +177,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
 
     public void construtorObservable(Observable obs) {
@@ -184,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Metodo listener das requisições do oreo (notificações)
-     * */
+     */
     @Override
     public void update(Observable observable, Object arg) {
         if (observable instanceof ObservableRequest) {
@@ -209,11 +216,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT).show();
                 }
             });
-           //System.out.println("chegou");
+            //System.out.println("chegou");
         }
     }
-
-
-
-
 }

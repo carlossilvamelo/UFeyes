@@ -1,8 +1,6 @@
 package ufeyes.com.ufeyes.utils;
 
 import ufeyes.com.ufeyes.domain.Assalt;
-import ufeyes.com.ufeyes.domain.CarBreakIn;
-import ufeyes.com.ufeyes.domain.Vandalism;
 
 /**
  * Created by carlo on 30/10/2017.
