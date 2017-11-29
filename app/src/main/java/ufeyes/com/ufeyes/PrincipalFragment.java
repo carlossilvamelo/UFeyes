@@ -147,7 +147,7 @@ public class PrincipalFragment extends Fragment {
                         InsertRequestService insertRequestService = new InsertRequestService();
                         insertRequestService.insertAssaltEntity(newAssalt);
 
-                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+                        UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getContext());
 
                         UserA usuarioLogado = user.getUser();
 
@@ -155,12 +155,6 @@ public class PrincipalFragment extends Fragment {
                         String time  = new Date().toString();
                         Log.d("Data da localizacao ", time);
                         Log.d("Usuario logado ", usuarioLogado.getNome());
-
-                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                        //if(sucessUser){
-                        // System.out.println("Success user");
-                        //}
 
                         OccurrenceDAO Odao = new OccurrenceDAO(getContext());
                         boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Assalto", usuarioLogado.getId(), time);
@@ -200,7 +194,7 @@ public class PrincipalFragment extends Fragment {
                         insertRequestService.insertCarBreakInEntity(newCarBreakIn);
                         alert.dismiss();
 
-                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+                        UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getContext());
 
                         UserA usuarioLogado = user.getUser();
 
@@ -209,11 +203,6 @@ public class PrincipalFragment extends Fragment {
                         Log.d("Data da localizacao ", time);
                         Log.d("Usuario logado ", usuarioLogado.getNome());
 
-                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                        //if(sucessUser){
-                        // System.out.println("Success user");
-                        //}
 
                         OccurrenceDAO Odao = new OccurrenceDAO(getContext());
                         boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Arrombamento", usuarioLogado.getId(), time);
@@ -252,7 +241,7 @@ public class PrincipalFragment extends Fragment {
                         insertRequestService.insertVandalismEntity(newVandalism);
                         alert.dismiss();
 
-                        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+                        UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getContext());
 
                         UserA usuarioLogado = user.getUser();
 
@@ -260,12 +249,6 @@ public class PrincipalFragment extends Fragment {
                         String time  = new Date().toString();
                         Log.d("Data da localizacao ", time);
                         Log.d("Usuario logado ", usuarioLogado.getNome());
-
-                        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                        //if(sucessUser){
-                        // System.out.println("Success user");
-                        //}
 
                         OccurrenceDAO Odao = new OccurrenceDAO(getContext());
                         boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Vandalismo", usuarioLogado.getId(), time);
@@ -378,17 +361,19 @@ public class PrincipalFragment extends Fragment {
 
         } else {
             locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            //location = locationManager
+                    //.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             location = locationManager
-                    .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        .getLastKnownLocation(
+                                LocationManager.PASSIVE_PROVIDER
+                        );
 
-            if (location == null)
-                tvLongitude.setText("location null");
         }
         if (location != null) {
 
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-
+            Log.d("location:",latitude +", "+longitude);
             // tvLatitude.setText("Latitude: " + latitude);
             // tvLongitude.setText("Longitude: " + longitude);
         }

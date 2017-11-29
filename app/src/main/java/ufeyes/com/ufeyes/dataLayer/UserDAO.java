@@ -32,7 +32,7 @@ public class UserDAO {
     public boolean salvar(String id, String name, String sex){
         ContentValues cv = new ContentValues();
 
-            cv.put("id", "0001");
+            cv.put("id", id);
             cv.put("name", name);
             cv.put("sex", sex);
 

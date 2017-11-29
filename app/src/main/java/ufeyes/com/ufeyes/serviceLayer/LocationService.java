@@ -59,7 +59,6 @@ public class LocationService {
         //  tvLongitude = (TextView) getActivity().findViewById(R.id.tvLongitude);
 
 
-
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //permição em tempode xecução
