@@ -337,11 +337,12 @@ public class PrincipalFragment extends Fragment {
         fabLayout1.setVisibility(View.VISIBLE);
         fabLayout2.setVisibility(View.VISIBLE);
         fabLayout3.setVisibility(View.VISIBLE);
+        fabBGLayout.setVisibility(View.VISIBLE);
 
         fab.animate().rotationBy(180);
-        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_12));
-        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_24));
-        fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_36));
+        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
+        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
+        fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
     }
 
     private void closeFABMenu(){
@@ -361,6 +362,7 @@ public class PrincipalFragment extends Fragment {
                     fabLayout1.setVisibility(View.GONE);
                     fabLayout2.setVisibility(View.GONE);
                     fabLayout3.setVisibility(View.GONE);
+                    fabBGLayout.setVisibility(View.GONE);
                 }
 
             }
