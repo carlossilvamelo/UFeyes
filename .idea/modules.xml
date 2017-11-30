@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UFeyes.iml" filepath="$PROJECT_DIR$/UFeyes.iml" />
-      <module fileurl="file://H:\UFeyes\UFeyes.iml" filepath="H:\UFeyes\UFeyes.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://H:\UFeyes\app\app.iml" filepath="H:\UFeyes\app\app.iml" />
     </modules>
   </component>
 </project>
