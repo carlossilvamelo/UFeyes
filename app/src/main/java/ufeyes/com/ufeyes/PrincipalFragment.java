@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
 import ufeyes.com.ufeyes.domain.Localization;
+import ufeyes.com.ufeyes.domain.Ocorrencia;
 import ufeyes.com.ufeyes.domain.User;
 import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.enumerations.EnumUserCondition;
@@ -163,161 +165,112 @@ public class PrincipalFragment extends Fragment {
                 }
             }
         });
+
         fab1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //setando usuário
-                User newUser = new User();
-                newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
+            public void onClick(View v) {
 
-                //obtendo localização
-                LocationService locationService = new LocationService(getActivity());
-                locationService.pegarOrientacao();
-                Localization newLocalization = new Localization();
-                newLocalization.setLatitude(locationService.getLatitude());
-                newLocalization.setLongitude(locationService.getLongitude());
-                newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
+                pegarOrientacao();
 
+                LayoutInflater li = getActivity().getLayoutInflater();
+                View view = li.inflate(R.layout.confirmation_layout, null);
 
-                //setando arrombamento
-                CarBreakIn newCarBreakIn = new CarBreakIn();
-                newCarBreakIn.setId(new Timestamp(System.currentTimeMillis()).toString());
-                newCarBreakIn.setUsuario(newUser);
-                newCarBreakIn.setLocalizacao(newLocalization);
+                Button btConfirm = (Button) view.findViewById(R.id.btConfirmar);
+                btConfirm.setCompoundDrawablesWithIntrinsicBounds(R.drawable.assalto, 0, 0, 0);
+                btConfirm.setText("Confirmar Assalto");
+                view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
 
-                //enviando requisição
-                InsertRequestService insertRequestService = new InsertRequestService();
-                insertRequestService.insertCarBreakInEntity(newCarBreakIn);
-                alert.dismiss();
+                });
 
-                UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+                view.findViewById(R.id.btConfirmar).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String type = "Assalto";
+                        confirmarDenuncia(type);
+                        alert.dismiss();
+                    }
+                });
 
-                UserA usuarioLogado = user.getUser();
-
-                //cadastra uma nova ocorrencia no bd
-                String time  = new Date().toString();
-                Log.d("Data da localizacao ", time);
-                Log.d("Usuario logado ", usuarioLogado.getNome());
-
-                //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                //if(sucessUser){
-                // System.out.println("Success user");
-                //}
-
-                OccurrenceDAO Odao = new OccurrenceDAO(getContext());
-                boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Arrombamento", usuarioLogado.getId(), time);
-                if(sucessOccurrenc){
-                    System.out.println("Success occurrence arrombamento");
-                }
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirmação de denúncia");
+                builder.setView(view);
+                alert = builder.create();
+                alert.show();
 
             }
 
         });
         fab2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            public void onClick(View v) {
+                pegarOrientacao();
 
-                //setando usuário
-                User newUser = new User();
-                newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
+                LayoutInflater li = getActivity().getLayoutInflater();
+                View view = li.inflate(R.layout.confirmation_layout, null);
 
-                //obtendo localização
-                LocationService locationService = new LocationService(getActivity());
-                locationService.pegarOrientacao();
+                Button btConfirm = (Button) view.findViewById(R.id.btConfirmar);
+                btConfirm.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrombamento_carro, 0, 0, 0);
+                btConfirm.setText("Confirmar Arrombamento");
 
-                //criando localização
-                Localization newLocalization = new Localization();
-                newLocalization.setLatitude(locationService.getLatitude());
-                newLocalization.setLongitude(locationService.getLongitude());
-                newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
+                view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
 
+                });
 
-                //setando assalto
-                Assalt newAssalt = new Assalt();
-                newAssalt.setId(TimestampManager.getTimeStamp());
-                newAssalt.setUsuario(newUser);
-                newAssalt.setLocalizacao(newLocalization);
+                view.findViewById(R.id.btConfirmar).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String type = "Arrombamento";
+                        confirmarDenuncia(type);
+                        alert.dismiss();
+                    }
+                });
 
-                //enviando requisição
-                InsertRequestService insertRequestService = new InsertRequestService();
-                insertRequestService.insertAssaltEntity(newAssalt);
-
-                UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
-
-                UserA usuarioLogado = user.getUser();
-
-                //cadastra uma nova ocorrencia no bd
-                String time  = new Date().toString();
-                Log.d("Data da localizacao ", time);
-                Log.d("Usuario logado ", usuarioLogado.getNome());
-
-                //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                //if(sucessUser){
-                // System.out.println("Success user");
-                //}
-
-                OccurrenceDAO Odao = new OccurrenceDAO(getContext());
-                boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Assalto", usuarioLogado.getId(), time);
-                if(sucessOccurrenc){
-                    System.out.println("Success occurrence assalt");
-                }
-
-                alert.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirmação de denúncia");
+                builder.setView(view);
+                alert = builder.create();
+                alert.show();
 
             }
 
         });
         fab3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //setando usuário
-                User newUser = new User();
-                newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
-                newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
+            public void onClick(View v) {
 
-                //obtendo localização
-                LocationService locationService = new LocationService(getActivity());
-                locationService.pegarOrientacao();
-                Localization newLocalization = new Localization();
-                newLocalization.setLatitude(locationService.getLatitude());
-                newLocalization.setLongitude(locationService.getLongitude());
-                newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
+                pegarOrientacao();
 
+                LayoutInflater li = getActivity().getLayoutInflater();
+                View view = li.inflate(R.layout.confirmation_layout, null);
 
-                //setando assalto
-                Vandalism newVandalism = new Vandalism();
-                newVandalism.setId(new Timestamp(System.currentTimeMillis()).toString());
-                newVandalism.setUsuario(newUser);
-                newVandalism.setLocalizacao(newLocalization);
+                Button btConfirm = (Button) view.findViewById(R.id.btConfirmar);
+                btConfirm.setCompoundDrawablesWithIntrinsicBounds(R.drawable.vandalismo, 0, 0, 0);
+                btConfirm.setText("Confirmar Vandalismo");
 
-                //enviando requisição
-                InsertRequestService insertRequestService = new InsertRequestService();
-                insertRequestService.insertVandalismEntity(newVandalism);
-                alert.dismiss();
+                view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
 
-                UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+                });
 
-                UserA usuarioLogado = user.getUser();
+                view.findViewById(R.id.btConfirmar).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String type = "Vandalismo";
+                        confirmarDenuncia(type);
+                        alert.dismiss();
+                    }
+                });
 
-                //cadastra uma nova ocorrencia no bd
-                String time  = new Date().toString();
-                Log.d("Data da localizacao ", time);
-                Log.d("Usuario logado ", usuarioLogado.getNome());
-
-                //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-                //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-                //if(sucessUser){
-                // System.out.println("Success user");
-                //}
-
-                OccurrenceDAO Odao = new OccurrenceDAO(getContext());
-                boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Vandalismo", usuarioLogado.getId(), time);
-                if(sucessOccurrenc){
-                    System.out.println("Success occurrence vandalism");
-                }
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirmação de denúncia");
+                builder.setView(view);
+                alert = builder.create();
+                alert.show();
             }
 
         });
@@ -330,6 +283,90 @@ public class PrincipalFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void confirmarDenuncia(String type){
+        //setando usuário
+        User newUser = new User();
+        newUser.setCondition(EnumUserCondition.WITNESS.ordinal());
+        newUser.setIdUser("ID" + TimestampManager.getTimeStamp());
+
+        //obtendo localização
+        LocationService locationService = new LocationService(getActivity());
+        locationService.pegarOrientacao();
+        Localization newLocalization = new Localization();
+        newLocalization.setLatitude(locationService.getLatitude());
+        newLocalization.setLongitude(locationService.getLongitude());
+        newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
+
+        InsertRequestService insertRequestService = new InsertRequestService();
+        switch (type){
+            case "Assalto":
+                Assalt newAssalt = new Assalt();
+                newAssalt.setId(TimestampManager.getTimeStamp());
+                newAssalt.setUsuario(newUser);
+                newAssalt.setLocalizacao(newLocalization);
+
+                //enviando requisição
+                insertRequestService.insertAssaltEntity(newAssalt);
+                break;
+            case "Arrombamento":
+                //setando arrombamento
+                CarBreakIn newCarBreakIn = new CarBreakIn();
+                newCarBreakIn.setId(new Timestamp(System.currentTimeMillis()).toString());
+                newCarBreakIn.setUsuario(newUser);
+                newCarBreakIn.setLocalizacao(newLocalization);
+
+                //enviando requisição
+                insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+                break;
+            case "Vandalismo":
+                //setando assalto
+                Vandalism newVandalism = new Vandalism();
+                newVandalism.setId(new Timestamp(System.currentTimeMillis()).toString());
+                newVandalism.setUsuario(newUser);
+                newVandalism.setLocalizacao(newLocalization);
+
+                //enviando requisição
+                insertRequestService.insertVandalismEntity(newVandalism);
+                break;
+            default:
+                break;
+        }
+
+        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+        //UserA usuarioLogado = user.getUser();
+        UserA usuarioLogado = new UserA("19281","Usuario Anonimo","Nao definido" );
+        //cadastra uma nova ocorrencia no bd
+        String time  = new Date().toString();
+        Log.d("Data da localizacao ", time);
+        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, type, usuarioLogado.getId(), time);
+        if(sucessOccurrenc){
+            System.out.println("Ocorrência inserida com sucesso: " + type);
+        }
+
+    }
+
+    private void enviarOcorrencia(Ocorrencia oc){
+        UsuarioLogado user = UsuarioLogado.getInstance("0001", getContext());
+
+        UserA usuarioLogado = user.getUser();
+
+        //cadastra uma nova ocorrencia no bd
+        String time  = new Date().toString();
+        Log.d("Data da localizacao ", time);
+        Log.d("Usuario logado ", usuarioLogado.getNome());
+
+
+        OccurrenceDAO Odao = new OccurrenceDAO(getContext());
+        boolean sucessOccurrenc = Odao.salvar(time, latitude, longitude, "Vandalismo", usuarioLogado.getId(), time);
+        if(sucessOccurrenc){
+            System.out.println("Success occurrence vandalism");
+        }
     }
 
     private void showFABMenu(){

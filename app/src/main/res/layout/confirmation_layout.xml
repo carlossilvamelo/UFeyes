@@ -5,31 +5,13 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btAssalto"
+        android:id="@+id/btConfirmar"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:text="Assalto"
-        android:drawableLeft="@drawable/assalto"/>
-
-    <Button
-        android:id="@+id/btArrombamento"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp"
-        android:text="Arrombamento de carro"
-        android:drawableLeft="@drawable/arrombamento_carro"
-        />
-
-    <Button
-        android:id="@+id/btVandalismo"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:text="Vandalismo"
-        android:drawableLeft="@drawable/vandalismo" />
+        android:drawableLeft="@drawable/assalto"
+        android:text="Confirmar" />
 
     <Button
         android:id="@+id/btCancelar"
