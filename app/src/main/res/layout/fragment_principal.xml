@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,21 +17,153 @@
 
 
 
-        <TextView
-            android:id="@+id/texto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clique longo para denunciar" />
-
-        <ImageButton
-
-            android:id="@+id/button_denuncia"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:shape="@drawable/bordas"
-            app:srcCompat="@drawable/logo" />
-
 
     </LinearLayout>
-</FrameLayout>
+    <include layout="@layout/content_main" />
+    <View
+        android:id="@+id/fabBGLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransBg"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/fabLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/standard_23"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        app:layout_behavior="ufeyes.com.ufeyes.utils.MoveUpwardBehavior"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <!--    if you are not using Snackbar with this activity then remove below line from every place of the file:
+
+            app:layout_behavior="com.ajaysinghdewari.floatingactionbuttonmenu.activities.utils.MoveUpwardBehavior"
+
+            the above line enables the view to Scrolls up with the snackbar as, the FAB do automaticaly scrolls up
+            when the snackbar appear, so if snackbar is not used please remove the above line from every view present in the xml-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assalto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="2"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@android:color/holo_green_dark"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/assalto" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginRight="@dimen/standard_23"
+        android:clipToPadding="false"
+        android:gravity="center_vertical"
+        android:padding="@dimen/standard_12"
+        android:visibility="gone"
+        app:layout_behavior="ufeyes.com.ufeyes.utils.MoveUpwardBehavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrombamento"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="2"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@android:color/holo_orange_dark"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/arrombamento_carro" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/fabLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="ufeyes.com.ufeyes.utils.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vandalismo"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/light_font"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="2"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+
+            android:tint="@android:color/white"
+            app:backgroundTint="?android:attr/colorPressedHighlight"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/vandalismo" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:gravity="center_vertical"
+        android:clipToPadding="false"
+        app:layout_behavior="ufeyes.com.ufeyes.utils.MoveUpwardBehavior"
+        android:padding="@dimen/standard_12"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_gravity="bottom|end">
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:gravity="center_vertical"
+            android:tint="@android:color/white"
+            app:backgroundTint="@android:color/holo_red_dark"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/logo" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
