@@ -113,38 +113,7 @@ public class PrincipalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         View view = inflater.inflate(R.layout.fragment_principal, container, false);
-        ImageButton botaoDenunciar = (ImageButton) view.findViewById(R.id.button_denuncia);
-
-        botaoDenunciar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                pegarOrientacao();
-
-                LayoutInflater li = getActivity().getLayoutInflater();
-                View view = li.inflate(R.layout.confirmation_layout, null);
-
-
-
-                view.findViewById(R.id.btCancelar).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        alert.dismiss();
-                    }
-
-                });
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Confirmação de denúncia");
-                builder.setView(view);
-                alert = builder.create();
-                alert.show();
-
-                return true;
-            }
-        });
 
         fabLayout1= (LinearLayout) view.findViewById(R.id.fabLayout1);
         fabLayout2= (LinearLayout) view.findViewById(R.id.fabLayout2);
