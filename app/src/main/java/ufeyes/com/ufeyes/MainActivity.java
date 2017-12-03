@@ -178,8 +178,9 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
         }else if (id == R.id.mapa_ocorrencias){
 
-            Intent intent = new Intent(this, MapOccurrencesActivity.class);
-            startActivity(intent);
+            MapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, mapFragment).commit();
 
         }
 
