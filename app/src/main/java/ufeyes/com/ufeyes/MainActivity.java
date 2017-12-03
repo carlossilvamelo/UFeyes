@@ -1,8 +1,13 @@
 package ufeyes.com.ufeyes;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -17,11 +22,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
+import ufeyes.com.ufeyes.serviceLayer.AlertService;
+import ufeyes.com.ufeyes.serviceLayer.MapOccurrencesService;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
@@ -47,19 +63,27 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
+        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
+        //if(sucessUser){
+        // System.out.println("Success user");
+        //}
+
         //pegando o usuario no br e colocando como usuario logado
-        UsuarioLogado user = UsuarioLogado.getInstance("0001", getApplicationContext());
+        UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getApplicationContext());
         UserA usuarioLogado = user.getUser();
 
         //subscrevendo nas entidades de contexto
 
         SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
         subscribeRequestService.setSubscribeAllEntities();
+
 
         PrincipalFragment fragmentInicial = new PrincipalFragment();
         getSupportFragmentManager().beginTransaction()
@@ -71,6 +95,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
 
         //listener de notificações
@@ -89,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
         View v = navigationView.getHeaderView(0);
         //colocando o nome do usuário na tela de menu
-        if(usuarioLogado != null) {
+        if (usuarioLogado != null) {
             TextView username_tv = (TextView) v.findViewById(R.id.username);
 
             username_tv.setText(usuarioLogado.getNome());
@@ -129,8 +154,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == R.id.action_notification){
+        } else if (id == R.id.action_notification) {
             FragmentNotification fragNotif = new FragmentNotification();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragNotif).commit();
@@ -161,10 +185,11 @@ public class MainActivity extends AppCompatActivity
             FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
-        } else if (id == R.id.mapa_ocorrencias) {
+        }else if (id == R.id.mapa_ocorrencias){
 
-            Intent intent = new Intent(this, MapOccurrencesActivity.class);
-            startActivity(intent);
+            MapFragment mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.corrent_layout, mapFragment).commit();
 
         }
 
@@ -194,14 +219,12 @@ public class MainActivity extends AppCompatActivity
         if (observable instanceof ObservableRequest) {
             ObservableRequest observableRequest = (ObservableRequest) observable;
             json = observableRequest.getEdicao();
-          //  toolbar.setTitle(json);
-           // getSupportActionBar().setTitle("asd");
-            Log.i("update","metodo update chamado na main");
-          //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
-            runOnUiThread(new Runnable()
-            {
-                public void run()
-                {
+            //  toolbar.setTitle(json);
+            // getSupportActionBar().setTitle("asd");
+            Log.i("update", "metodo update chamado na main");
+            //  Toast.makeText(getApplicationContext(),"recebeu",Toast.LENGTH_LONG).show();
+            runOnUiThread(new Runnable() {
+                public void run() {
                     NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
                     Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
                     notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
@@ -216,4 +239,7 @@ public class MainActivity extends AppCompatActivity
             //System.out.println("chegou");
         }
     }
+
+
+
 }

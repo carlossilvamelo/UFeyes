@@ -48,13 +48,15 @@ public class MapOccurrencesService extends IntentService {
                             .snippet(o.getDate())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_arrombamento)));
                     break;
-                case "Assalto":
+
+                    case "Assalto":
 
                     occurrences.add(new MarkerOptions().position(new LatLng(o.getLat(),o.getLng()))
                             .title(o.getType())
                             .snippet(o.getDate())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_assalto)));
                     break;
+
                 default:
 
                     occurrences.add(new MarkerOptions().position(new LatLng(o.getLat(),o.getLng()))
