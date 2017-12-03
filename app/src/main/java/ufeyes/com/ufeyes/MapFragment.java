@@ -355,39 +355,53 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         newLocalization.setIdLocalizacao("ID" + TimestampManager.getTimeStamp());
 
         InsertRequestService insertRequestService = new InsertRequestService();
+        Ocorrencia ocorrencia = null;
         switch (type){
             case "Assalto":
-                Assalt newAssalt = new Assalt();
-                newAssalt.setId(TimestampManager.getTimeStamp());
-                newAssalt.setUsuario(newUser);
-                newAssalt.setLocalizacao(newLocalization);
+                ocorrencia = new Assalt();
+                ocorrencia.setId(TimestampManager.getTimeStamp());
+                ocorrencia.setUsuario(newUser);
+                ocorrencia.setLocalizacao(newLocalization);
 
                 //enviando requisição
-                insertRequestService.insertAssaltEntity(newAssalt);
+                insertRequestService.insertAssaltEntity((Assalt) ocorrencia);
                 break;
             case "Arrombamento":
                 //setando arrombamento
-                CarBreakIn newCarBreakIn = new CarBreakIn();
-                newCarBreakIn.setId(new Timestamp(System.currentTimeMillis()).toString());
-                newCarBreakIn.setUsuario(newUser);
-                newCarBreakIn.setLocalizacao(newLocalization);
+                ocorrencia = new CarBreakIn();
+                ocorrencia.setId(new Timestamp(System.currentTimeMillis()).toString());
+                ocorrencia.setUsuario(newUser);
+                ocorrencia.setLocalizacao(newLocalization);
 
                 //enviando requisição
-                insertRequestService.insertCarBreakInEntity(newCarBreakIn);
+                insertRequestService.insertCarBreakInEntity((CarBreakIn) ocorrencia);
                 break;
             case "Vandalismo":
                 //setando assalto
-                Vandalism newVandalism = new Vandalism();
-                newVandalism.setId(new Timestamp(System.currentTimeMillis()).toString());
-                newVandalism.setUsuario(newUser);
-                newVandalism.setLocalizacao(newLocalization);
+                ocorrencia = new Vandalism();
+                ocorrencia.setId(new Timestamp(System.currentTimeMillis()).toString());
+                ocorrencia.setUsuario(newUser);
+                ocorrencia.setLocalizacao(newLocalization);
 
                 //enviando requisição
-                insertRequestService.insertVandalismEntity(newVandalism);
+                insertRequestService.insertVandalismEntity((Vandalism) ocorrencia);
                 break;
             default:
                 break;
         }
+
+        if(ocorrencia != null){
+            /**
+            LatLng latlng = new LatLng(ocorrencia.getLocalizacao().getLatitude(),
+                    ocorrencia.getLocalizacao().getLongitude());
+            MarkerOptions mo = new MarkerOptions()
+                    .position(latlng)
+                    .title(type);
+            map.addMarker(mo);
+            map.moveCamera(CameraUpdateFactory.newLatLng(mo.getPosition()));
+             **/
+        }
+
 
         UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getContext());
 

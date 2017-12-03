@@ -49,7 +49,6 @@ import ufeyes.com.ufeyes.utils.UsuarioLogado;
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
-        , PrincipalFragment.OnFragmentInteractionListener
         , MinhasDenunciasFragment.OnFragmentInteractionListener
         , FragmentNotification.OnFragmentInteractionListener{
 
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         subscribeRequestService.setSubscribeAllEntities();
 
 
-        PrincipalFragment fragmentInicial = new PrincipalFragment();
+        MapFragment fragmentInicial = new MapFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.corrent_layout, fragmentInicial).commit();
 
@@ -173,10 +172,9 @@ public class MainActivity extends AppCompatActivity
 
 
         if (id == R.id.denuncias) {
-            // Handle the camera action
-            PrincipalFragment fragPrincipal = new PrincipalFragment();
+            MapFragment mapFragment = new MapFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, fragPrincipal).commit();
+                    .replace(R.id.corrent_layout, mapFragment).commit();
         } else if (id == R.id.minhas_denuncias) {
             MinhasDenunciasFragment minhasDenunciasFragment = new MinhasDenunciasFragment();
             getSupportFragmentManager().beginTransaction()
