@@ -62,17 +62,10 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //UserDAO Udao = new UserDAO(this.activity.getApplicationContext());
-        //boolean sucessUser = Udao.salvar("2013021629", "Gustavo Henrique", "Masculino");
-        //if(sucessUser){
-        // System.out.println("Success user");
-        //}
 
         //pegando o usuario no br e colocando como usuario logado
         UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getApplicationContext());
@@ -94,7 +87,6 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         //listener de notificações
@@ -180,14 +172,14 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, minhasDenunciasFragment).commit();
         } else if (id == R.id.estatisticas) {
-            FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            //FragmentEstatisticas fragmentEstatisticas = new FragmentEstatisticas();
+            EstatisticaChart fragmentEstatisticas = new EstatisticaChart();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
         }else if (id == R.id.mapa_ocorrencias){
 
-            MapFragment mapFragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, mapFragment).commit();
+            Intent intent = new Intent(this, MapOccurrencesActivity.class);
+            startActivity(intent);
 
         }
 

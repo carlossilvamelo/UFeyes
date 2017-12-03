@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import ufeyes.com.ufeyes.EstatisticaChart;
 import ufeyes.com.ufeyes.FragmentEstatisticas;
 import ufeyes.com.ufeyes.dataLayer.QueryRequest;
 import ufeyes.com.ufeyes.domain.Assalt;
@@ -167,7 +168,7 @@ public class QueryRequestServiceCarBreakIn implements IQueryRequestListener {
         }//for (ContextElement ce : listAssalt)
 
 
-        iRequestOcorrenceListener = new FragmentEstatisticas();
+        iRequestOcorrenceListener = new EstatisticaChart();
         iRequestOcorrenceListener.resultListenerCarBreakIn(carBreakInList);
 
     }//sendAssalt()

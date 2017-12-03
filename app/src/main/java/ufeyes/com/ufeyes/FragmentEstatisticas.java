@@ -17,11 +17,15 @@ import java.util.Observer;
 
 import ufeyes.com.ufeyes.domain.Assalt;
 import ufeyes.com.ufeyes.domain.CarBreakIn;
+import ufeyes.com.ufeyes.domain.Occurrence;
+import ufeyes.com.ufeyes.domain.Ocorrencia;
 import ufeyes.com.ufeyes.domain.Vandalism;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.IRequestOcorrenceListener;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceAssalt;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceCarBreakIn;
 import ufeyes.com.ufeyes.serviceLayer.QueryRequestServiceVandalism;
+import ufeyes.com.ufeyes.utils.DateTime;
+import ufeyes.com.ufeyes.utils.TimestampManager;
 
 
 /**
@@ -49,6 +53,10 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
     private static TextView tvVandalismPeriod;
     private static TextView tvAssaltPeriod;
     private View fragmentView;
+
+    private static List<Assalt> listAssalt;
+    private static List<Vandalism> listVandalism;
+    private static List<CarBreakIn> listCarBreakIn;
 
     private OnFragmentInteractionListener mListener;
 
@@ -145,7 +153,7 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
 
 
-    private void attPercentOcorrences(){
+    private void attPercentOccurrences(){
         DecimalFormat df = new DecimalFormat("0.00");
         while(barrier != 3){
 
@@ -159,10 +167,15 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     }
 
+
+
+
     @Override
     public void resultListenerVandalism(List<Vandalism> vandalism) {
-        numVandalism = vandalism.size();
+        listVandalism = vandalism;
+        numVandalism =  listVandalism.size();
         Vandalism v = vandalism.get(0);
+
         Log.i("objVandalism",v.getUsuario().getIdUser()+" ");
        Log.i("objVandalism",v.getLocalizacao().getLatitude()+" ");
         Log.i("objAssalt",v.getThugList().size()+" ");
@@ -171,7 +184,8 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     @Override
     public void resultListenerAssalt(List<Assalt> assalt) {
-        numAssalt = assalt.size();
+        listAssalt = assalt;
+        numAssalt = listAssalt.size();
         Log.i("objAssalt",assalt.get(0).getUsuario().getIdUser()+" ");
         Log.i("objAssalt",assalt.get(0).getLocalizacao().getLatitude()+" ");
         Log.i("objAssalt",assalt.get(0).getThugList().size()+" ");
@@ -180,9 +194,10 @@ public class FragmentEstatisticas extends Fragment implements Observer, IRequest
 
     @Override
     public void resultListenerCarBreakIn(List<CarBreakIn> carBreakIn) {
-        numCarBreakIn = carBreakIn.size();
+        listCarBreakIn = carBreakIn;
+        numCarBreakIn = listCarBreakIn.size();
         barrier++;
-        attPercentOcorrences();
+        attPercentOccurrences();
         Log.i("objCarBreakIn",carBreakIn.get(0).getUsuario().getIdUser()+" ");
         Log.i("objCarBreakIn",carBreakIn.get(0).getLocalizacao().getLatitude()+" ");
     }
