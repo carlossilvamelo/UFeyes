@@ -176,12 +176,6 @@ public class MainActivity extends AppCompatActivity
             EstatisticaChart fragmentEstatisticas = new EstatisticaChart();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragmentEstatisticas).commit();
-        }else if (id == R.id.mapa_ocorrencias){
-
-            MapFragment mapFragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.corrent_layout, mapFragment).commit();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

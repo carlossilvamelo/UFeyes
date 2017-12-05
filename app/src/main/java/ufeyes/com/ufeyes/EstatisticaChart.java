@@ -203,9 +203,7 @@ public class EstatisticaChart extends Fragment implements IRequestOcorrenceListe
         numVandalism =  listVandalism.size();
         Vandalism v = vandalism.get(0);
 
-        Log.i("objVandalism",v.getUsuario().getIdUser()+" ");
-        Log.i("objVandalism",v.getLocalizacao().getLatitude()+" ");
-        Log.i("objAssalt",v.getThugList().size()+" ");
+
         barrier++;
     }
 
@@ -213,9 +211,7 @@ public class EstatisticaChart extends Fragment implements IRequestOcorrenceListe
     public void resultListenerAssalt(List<Assalt> assalt) {
         listAssalt = assalt;
         numAssalt = listAssalt.size();
-        Log.i("objAssalt",assalt.get(0).getUsuario().getIdUser()+" ");
-        Log.i("objAssalt",assalt.get(0).getLocalizacao().getLatitude()+" ");
-        Log.i("objAssalt",assalt.get(0).getThugList().size()+" ");
+
         barrier++;
     }
 
@@ -225,8 +221,7 @@ public class EstatisticaChart extends Fragment implements IRequestOcorrenceListe
         numCarBreakIn = listCarBreakIn.size();
         barrier++;
         attPercentOccurrences();
-        Log.i("objCarBreakIn",carBreakIn.get(0).getUsuario().getIdUser()+" ");
-        Log.i("objCarBreakIn",carBreakIn.get(0).getLocalizacao().getLatitude()+" ");
+
     }
 
 

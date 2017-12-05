@@ -15,10 +15,7 @@
 
             android:title="Estatisticas" />
 
-        <item
-            android:id="@+id/mapa_ocorrencias"
 
-            android:title="Mapa de ocorrências" />
 
 
     </group>
