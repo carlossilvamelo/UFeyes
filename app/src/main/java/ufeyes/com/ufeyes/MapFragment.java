@@ -27,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -391,15 +392,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         if(ocorrencia != null){
-            /**
             LatLng latlng = new LatLng(ocorrencia.getLocalizacao().getLatitude(),
                     ocorrencia.getLocalizacao().getLongitude());
-            MarkerOptions mo = new MarkerOptions()
-                    .position(latlng)
-                    .title(type);
-            map.addMarker(mo);
-            map.moveCamera(CameraUpdateFactory.newLatLng(mo.getPosition()));
-             **/
+            MarkerOptions marker = new MarkerOptions().position(latlng)
+                    .title(type)
+                    .snippet(new Date().toString())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mp_arrombamento));
+
+            map.addMarker(marker);
+            map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+
         }
 
 
