@@ -142,10 +142,12 @@ public class QueryRequestServiceCarBreakIn implements IQueryRequestListener {
                                 List<Atributo> attLocalizationList = l.getAttributes();
                                 for (Atributo attLocalization : attLocalizationList) {
                                     if (attLocalization.getName().equals("long")) {
+                                        Log.i("longLat",Double.parseDouble(attLocalization.getValue())+"");
                                         localization.setLongitude(Double.parseDouble(attLocalization.getValue()));
                                     }
                                     if (attLocalization.getName().equals("lat")) {
                                         localization.setLatitude(Double.parseDouble(attLocalization.getValue()));
+                                        Log.i("longLat",Double.parseDouble(attLocalization.getValue())+"");
                                     }
                                     if (attLocalization.getName().equals("timestamp")) {
                                         localization.setTimeStamp(attLocalization.getValue());

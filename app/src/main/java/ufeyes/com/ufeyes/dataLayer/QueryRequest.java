@@ -25,7 +25,7 @@ public class QueryRequest extends AsyncTask<String,Void,String> {
     StringBuffer data = new StringBuffer();
     BufferedReader bufferReader = null;
     BufferedWriter bufferedWriter = null;
-    String host ="10.7.40.82:1026";
+    String host ="10.7.40.90:1026";
     String request = "";
     String type;
     public QueryRequest(String type){

@@ -4,8 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     public static Context contextMain;
     private String json;
 
+
+
     private UserA user;
     private UserDAO userDAO;
 
@@ -72,8 +77,7 @@ public class MainActivity extends AppCompatActivity
         UserA usuarioLogado = user.getUser();
         contextMain = getApplicationContext();
         //subscrevendo nas entidades de contexto
-
-
+        pegarOrientacao();
       //  SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
       //  subscribeRequestService.setSubscribeAllEntities();
 
@@ -116,8 +120,6 @@ public class MainActivity extends AppCompatActivity
         //para sobrescrever nas entidades do oreon
        // SubscribeVerificationService subscribeApp = new SubscribeVerificationService();
        // subscribeApp.verifySubscribe(getApplicationContext());
-        OccurrenceDAO ocurrdao = new OccurrenceDAO(this);
-        ocurrdao.removeAll();
     }
 
     @Override
@@ -128,6 +130,23 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+    public void pegarOrientacao() {
+
+        // tvLatitude = (TextView) getActivity().findViewById(R.id.tvLatitude);
+        //  tvLongitude = (TextView) getActivity().findViewById(R.id.tvLongitude);
+
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //permição em tempode xecução
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
+
+        }
+
+
+
     }
 
     @Override
