@@ -25,6 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
 import ufeyes.com.ufeyes.serviceLayer.Listeners.INotificationListener;
@@ -115,7 +116,8 @@ public class MainActivity extends AppCompatActivity
         //para sobrescrever nas entidades do oreon
        // SubscribeVerificationService subscribeApp = new SubscribeVerificationService();
        // subscribeApp.verifySubscribe(getApplicationContext());
-
+        OccurrenceDAO ocurrdao = new OccurrenceDAO(this);
+        ocurrdao.removeAll();
     }
 
     @Override
