@@ -1,7 +1,9 @@
 package ufeyes.com.ufeyes;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,7 @@ import java.util.Observer;
 
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.INotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
 import ufeyes.com.ufeyes.utils.UsuarioLogado;
@@ -44,7 +47,19 @@ public class MainActivity extends AppCompatActivity
     private UserDAO userDAO;
 
     private NavigationView navigationView = null;
-    private Toolbar toolbar = null;
+    private static Toolbar toolbar = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiverNotification, new IntentFilter("ufeyes.com.ufeyes.notif"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiverNotification);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +71,7 @@ public class MainActivity extends AppCompatActivity
         UserA usuarioLogado = user.getUser();
         contextMain = getApplicationContext();
         //subscrevendo nas entidades de contexto
+
 
       //  SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
       //  subscribeRequestService.setSubscribeAllEntities();
@@ -133,6 +149,8 @@ public class MainActivity extends AppCompatActivity
             FragmentNotification fragNotif = new FragmentNotification();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragNotif).commit();
+            MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
+            notifMenu.setIcon(R.drawable.notification);
             return true;
         }
 
@@ -196,8 +214,9 @@ public class MainActivity extends AppCompatActivity
                 public void run() {
                     NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
                     Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
+                    notecreate.sendNotification(getApplicationContext(), resultIntent, "Nova ocorrência", "Nova ocorrência na UFRN",
                             001);
+
                     MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
                     notifMenu.setIcon(R.drawable.notification_received);
                     // Teste de atualização
@@ -208,6 +227,29 @@ public class MainActivity extends AppCompatActivity
             //System.out.println("chegou");
         }
     }
+
+
+    private BroadcastReceiver receiverNotification = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Bundle bundle = intent.getParcelableExtra("bundle");
+
+            if (intent != null) {
+                if(intent.getBooleanExtra("change_bell",false)){
+                   // String alert = intent.getStringExtra("alert");
+                  //  toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+                    MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
+                    notifMenu.setIcon(R.drawable.notification_received);
+                }
+
+                //Toast.makeText(context, alert,Toast.LENGTH_LONG).show();
+
+            }
+        }
+    };
+
 
 
 }
