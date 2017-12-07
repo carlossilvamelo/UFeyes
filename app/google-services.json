@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "931528940621",
+    "firebase_url": "https://ufeyes-4bb4f.firebaseio.com",
+    "project_id": "ufeyes-4bb4f",
+    "storage_bucket": "ufeyes-4bb4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931528940621:android:7d2082ba0a939c2b",
+        "android_client_info": {
+          "package_name": "ufeyes.com.ufeyes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931528940621-668hd4cbm15srk0alne963nvavij8sbc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ufeyes.com.ufeyes",
+            "certificate_hash": "0fb02214c9489c87090061d18e21d77b0c2a78ea"
+          }
+        },
+        {
+          "client_id": "931528940621-15st7r44i4fa9r4653mib4tfelv3ihr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhpXDwoVderogtGkT1nD1xtcfIcS1fiIE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931528940621-15st7r44i4fa9r4653mib4tfelv3ihr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

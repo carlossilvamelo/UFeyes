@@ -49,6 +49,8 @@ import ufeyes.com.ufeyes.serviceLayer.AlertService;
 import ufeyes.com.ufeyes.serviceLayer.InsertRequestService;
 import ufeyes.com.ufeyes.serviceLayer.LocationService;
 import ufeyes.com.ufeyes.serviceLayer.MapOccurrencesService;
+import ufeyes.com.ufeyes.serviceLayer.NotificationSender;
+import ufeyes.com.ufeyes.utils.ParseFCM;
 import ufeyes.com.ufeyes.utils.TimestampManager;
 import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
@@ -195,6 +197,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onClick(View view) {
                         String type = "Assalto";
+                        new NotificationSender().execute(ParseFCM.msgTopic(type));
                         confirmarDenuncia(type);
                         alert.dismiss();
                     }
@@ -231,6 +234,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onClick(View view) {
                         String type = "Arrombamento";
+                        new NotificationSender().execute(ParseFCM.msgTopic(type));
                         confirmarDenuncia(type);
                         alert.dismiss();
                     }
@@ -268,6 +272,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onClick(View view) {
                         String type = "Vandalismo";
+                        new NotificationSender().execute(ParseFCM.msgTopic(type));
                         confirmarDenuncia(type);
                         alert.dismiss();
                     }
