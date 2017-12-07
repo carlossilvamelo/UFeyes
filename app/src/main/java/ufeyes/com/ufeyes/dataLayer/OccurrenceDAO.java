@@ -71,4 +71,7 @@ public class OccurrenceDAO {
         return occurrences;
     }
 
+    public void removeAll(){
+        dg.getDatabase().delete(TABLE_OCCURRENCE, null,null );
+    }
 }

@@ -4,10 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -22,67 +20,70 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ufeyes.com.ufeyes.dataLayer.OccurrenceDAO;
 import ufeyes.com.ufeyes.dataLayer.UserDAO;
 import ufeyes.com.ufeyes.domain.UserA;
-import ufeyes.com.ufeyes.serviceLayer.AlertService;
-import ufeyes.com.ufeyes.serviceLayer.MapOccurrencesService;
+import ufeyes.com.ufeyes.serviceLayer.Listeners.INotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.NotificationCreator;
-import ufeyes.com.ufeyes.serviceLayer.Listeners.NotificationListener;
 import ufeyes.com.ufeyes.serviceLayer.ObservableRequest;
-import ufeyes.com.ufeyes.utils.RetrieveIp;
-import ufeyes.com.ufeyes.serviceLayer.SubscribeVerificationService;
-import ufeyes.com.ufeyes.serviceLayer.SubscribeRequestService;
 import ufeyes.com.ufeyes.utils.UsuarioLogado;
 
 public class MainActivity extends AppCompatActivity
         implements Observer, NavigationView.OnNavigationItemSelectedListener
         , FragmentEstatisticas.OnFragmentInteractionListener
         , MinhasDenunciasFragment.OnFragmentInteractionListener
-        , FragmentNotification.OnFragmentInteractionListener{
+        , FragmentNotification.OnFragmentInteractionListener {
 
 
     private Observable observableRequest;
+    public static Context contextMain;
     private String json;
 
     private UserA user;
     private UserDAO userDAO;
 
     private NavigationView navigationView = null;
-    private Toolbar toolbar = null;
+    private static Toolbar toolbar = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiverNotification, new IntentFilter("ufeyes.com.ufeyes.notif"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiverNotification);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FirebaseMessaging.getInstance().subscribeToTopic("ocorrencia");
         //pegando o usuario no br e colocando como usuario logado
         UsuarioLogado user = UsuarioLogado.getInstance("2013021629", getApplicationContext());
         UserA usuarioLogado = user.getUser();
-
+        contextMain = getApplicationContext();
         //subscrevendo nas entidades de contexto
 
-        SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
-        subscribeRequestService.setSubscribeAllEntities();
+
+      //  SubscribeRequestService subscribeRequestService = new SubscribeRequestService(RetrieveIp.retrieveIP());
+      //  subscribeRequestService.setSubscribeAllEntities();
 
 
         MapFragment fragmentInicial = new MapFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.corrent_layout, fragmentInicial).commit();
 
-        ObservableRequest observableRequest = new ObservableRequest();
-        construtorObservable(observableRequest);
+       // ObservableRequest observableRequest = new ObservableRequest();
+        //construtorObservable(observableRequest);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //listener de notificações
-        NotificationListener notificationListener = new NotificationListener(observableRequest);
-        notificationListener.start();
+      //  NotificationListener notificationListener = new NotificationListener(observableRequest);
+       // notificationListener.start();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,9 +114,10 @@ public class MainActivity extends AppCompatActivity
 
         //verificando é a primeira vez que o aplicativo é aberto
         //para sobrescrever nas entidades do oreon
-        SubscribeVerificationService subscribeApp = new SubscribeVerificationService();
-        subscribeApp.verifySubscribe(getApplicationContext());
-
+       // SubscribeVerificationService subscribeApp = new SubscribeVerificationService();
+       // subscribeApp.verifySubscribe(getApplicationContext());
+        OccurrenceDAO ocurrdao = new OccurrenceDAO(this);
+        ocurrdao.removeAll();
     }
 
     @Override
@@ -149,6 +151,8 @@ public class MainActivity extends AppCompatActivity
             FragmentNotification fragNotif = new FragmentNotification();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.corrent_layout, fragNotif).commit();
+            MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
+            notifMenu.setIcon(R.drawable.notification);
             return true;
         }
 
@@ -212,8 +216,9 @@ public class MainActivity extends AppCompatActivity
                 public void run() {
                     NotificationCreator notecreate = new NotificationCreator(getApplicationContext());
                     Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    notecreate.sendNotification(getApplicationContext(), resultIntent, "Testando", "Texto da notificação",
+                    notecreate.sendNotification(getApplicationContext(), resultIntent, "Nova ocorrência", "Nova ocorrência na UFRN",
                             001);
+
                     MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
                     notifMenu.setIcon(R.drawable.notification_received);
                     // Teste de atualização
@@ -224,6 +229,28 @@ public class MainActivity extends AppCompatActivity
             //System.out.println("chegou");
         }
     }
+
+
+    private BroadcastReceiver receiverNotification = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Bundle bundle = intent.getParcelableExtra("bundle");
+
+            if (intent != null) {
+                if(intent.getBooleanExtra("change_bell",false)){
+                   // String alert = intent.getStringExtra("alert");
+                  //  toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+                    MenuItem notifMenu = toolbar.getMenu().findItem(R.id.action_notification);
+                    notifMenu.setIcon(R.drawable.notification_received);
+                }
+
+                //Toast.makeText(context, alert,Toast.LENGTH_LONG).show();
+
+            }
+        }
+    };
 
 
 
